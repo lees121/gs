@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流信息</title>
+</head>
+<body>
+    <h1>物流信息</h1>
+    <ul>
+        {% for event in logistics_info.events %}
+        <li>{{ event.time }}: {{ event.context }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

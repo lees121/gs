@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物流信息查询</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .form-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-container input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-container button {
+
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+        }
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+        .tracking-info {
+            margin-top: 20px;
+        }
+        .tracking-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .tracking-info table, .tracking-info th, .tracking-info td {
+            border: 1px solid #ddd;
+        }
+        .tracking-info th, .tracking-info td {
+            padding: 12px;
+            text-align: left;
+        }
+        .tracking-info th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tracking-info tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .tracking-info tr:hover {
+            background-color: #ddd;
+        }
+        /* 移动设备样式 */
+        @media only screen and (max-width: 600px) {
+            body {
+                margin: 10px;
+                font-size: 14px;
+            }
+            .container {
+                padding: 10px;
+            }
+            .form-container input[type="text"] {
+                width: calc(100% - 22px);
+            }
+            .tracking-info table, .tracking-info th, .tracking-info td {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>物流信息查询</h1>
+        <div class="form-container">
+            <form method="post">
+                <input type="text" id="tracking_no" name="tracking_no" placeholder="输入跟踪码" required>
+                <button type="submit">跟踪</button>
+            </form>
+        </div>
+        {% if tracking_info %}
+            <div class="tracking-info">
+                {% if tracking_info is string %}
+                    <p>{{ tracking_info }}</p>
+                {% else %}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>物流信息</th>
+                                <th>时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in tracking_info %}
+                                <tr>
+                                    <td>{{ item.tracking }}</td>
+                                    <td>{{ item.trackingtime }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+

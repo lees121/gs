@@ -1,0 +1,134 @@
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加包裹</title>
+
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 100%;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>添加包裹</h1>
+
+    <!-- 提示信息，如果有的话 -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- 包裹信息表单 -->
+    <div class="card">
+        <div class="container">
+            <form method="post" action="/add_package">
+                <label for="warehouse_name">选择仓库：</label>
+                <select name="warehouse_name" id="warehouse_name">
+                    {% for warehouse_name in warehouse_names %}
+                    <option value="{{ warehouse_name }}">{{ warehouse_name }}</option>
+                    {% endfor %}
+                </select>
+
+
+                 <br>
+                <label for="tracking_number">快递单号：</label>
+                <input type="text" name="tracking_number" id="tracking_number">
+                <br>
+                <label for="courier_company">快递公司：</label>
+                <input type="text" name="courier_company" id="courier_company">
+                <br>
+                <label for="cargo_type">货物类型：</label>
+<select name="cargo_type" id="cargo_type">
+    <option value="普货">普货</option>
+    <option value="敏感货">敏感货</option>
+</select>
+                <br>
+                <label for="item_name">商品名称：</label>
+                <input type="text" name="item_name" id="item_name">
+                <br>
+                <label for="weight">重量：</label>
+                <input type="text" name="weight" id="weight">
+                <br>
+                <label for="size">尺寸：</label>
+                <input type="text" name="size" id="size">
+                <br>
+                <label for="quantity">数量：</label>
+                <input type="text" name="quantity" id="quantity">
+                <br>
+                <label for="note">备注：</label>
+                <textarea name="note" id="note" cols="30" rows="5"></textarea>
+                <br>
+                <input type="submit" value="提交">
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快递跟踪信息</title>
+    <style>
+        /* 在这里添加你的 CSS 样式 */
+    </style>
+</head>
+<body>
+    <h1>快递跟踪信息</h1>
+    <div>
+        <p>快递单号: {{ tracking_info.documentCode }}</p>
+        <p>状态: {{ tracking_info.status }}</p>
+        <p>最新更新时间: {{ tracking_info.updateTime }}</p>
+        <!-- 在这里添加其他跟踪信息字段 -->
+    </div>
+</body>
+</html>

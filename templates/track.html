@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>物流详情</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mobile.css') }}"> <!-- 引入移动端样式 -->
+
+</head>
+<body>
+    <div class="container">
+        <h1>空运追踪</h1>
+        <form action="/track" method="POST">
+            <input type="text" name="documentCode" placeholder="输入跟踪码" required>
+            <input type="submit" value="跟踪">
+        </form>
+
+        <ul>
+            {% for track_content in all_track_content %}
+                <li {% if loop.index == 1 %}class="latest"{% endif %}>{{ track_content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

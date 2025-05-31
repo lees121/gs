@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的包裹</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .card {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            width: 100%;
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card-header {
+            padding: 15px;
+            background-color: #f9f9f9;
+            color: #333;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-header:hover {
+            background-color: #f1f1f1;
+        }
+
+        .order-number {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .tracking-info a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .tracking-info a:hover {
+            color: #0056b3;
+        }
+
+        .card-content {
+            padding: 20px;
+            display: none;
+            background-color: #fff;
+        }
+
+        .status, .cargo-type {
+            font-size: 15px;
+        }
+
+        .sensitive {
+            color: red;
+            text-shadow: 0 0 5px yellow;
+        }
+
+        .right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+        button.toggle-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        button.toggle-button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            .card-header {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>我的包裹</h1>
+    {% set total_packages = packages|length %}
+    {% for package in packages %}
+    <div class="card">
+        <div class="card-header" onclick="toggleContent(this)">
+            <div class="order-number">{{ total_packages - loop.index + 1 }}:</div>
+            <div class="tracking-info">
+                <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank">{{ package.tracking_number }}</a>
+                <p>{{ package.item_name }}/{{ package.note }}</p>
+            </div>
+            <div class="right">
+                <span class="cargo-type">{{ package.cargo_type }}</span>
+                <span class="status">{{ package.status }}</span>
+                <button class="toggle-button">展开</button>
+            </div>
+        </div>
+        <div class="card-content">
+            <p>包裹id：{{ package.id }}</p>
+            <p>快递单号: <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank">{{ package.tracking_number }}</a></p>
+            <p>快递公司: {{ package.courier_company }}</p>
+            <p>商品名称: {{ package.item_name }}</p>
+            <p>重量: {{ package.weight }}</p>
+            <p>尺寸: {{ package.size }}</p>
+            <p>数量: {{ package.quantity }}</p>
+            <p>备注: {{ package.note }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script>
+        function toggleContent(element) {
+            const button = element.querySelector('.toggle-button');
+            const content = element.nextElementSibling;
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+                button.textContent = "收起";
+            } else {
+                content.style.display = "none";
+                button.textContent = "展开";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const cargoTypes = document.querySelectorAll('.cargo-type');
+            const statuses = document.querySelectorAll('.status');
+
+            cargoTypes.forEach(function(element) {
+                if (element.textContent.trim() === '敏感货') {
+                    element.style.color = 'red';
+                    element.style.textShadow = '0 0 5px yellow';
+                }
+            });
+
+            statuses.forEach(function(element) {
+                if (element.textContent.trim() === '未入库') {
+                    element.style.color = '#999'; // 灰色
+                } else if (element.textContent.trim() === '已入库') {
+                    element.style.color = 'green';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

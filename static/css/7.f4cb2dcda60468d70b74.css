@@ -1,0 +1,143 @@
+.loading-container .loading-box {
+    text-align: center;
+    margin: .42667rem 0;
+    color: #ccc;
+    min-height: .85333rem;
+    position: relative
+}
+
+.loading-container .empty-box {
+    text-align: center;
+    color: #9fa2c2;
+    margin-top: 4.26667rem;
+    font-size: .512rem
+}
+
+.loading-container .empty-box .empty-img {
+    width: 5.03467rem;
+    height: 6.57067rem
+}
+
+.order-item-container {
+    background-color: #fff;
+    border-radius: .42667rem;
+    padding-bottom: .42667rem;
+    margin-bottom: .42667rem;
+    overflow: hidden
+}
+
+.order-item-container .order-sn {
+    padding: .42667rem;
+    border-radius: .42667rem .42667rem 0 0;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.order-item-container .order-sn .sn-text {
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1
+}
+
+.order-item-container .exceptional {
+    width: 2.13333rem;
+    padding: .10667rem .21333rem;
+    color: #fff;
+    font-size: .512rem;
+    background-color: #d5210e
+}
+
+.order-item-container .line-box {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    text-align: center;
+    -webkit-justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    font-size: .64rem;
+    padding: .64rem 0 .42667rem;
+    border-bottom: 1PX solid #f2f2f2
+}
+
+.order-item-container .line-dot {
+    width: .34133rem;
+    height: .34133rem;
+    display: inline-block;
+    background-color: #9bbf4d;
+    border-radius: 50%;
+    margin-bottom: .64rem
+}
+
+.order-item-container .to-dot {
+    background-color: #ff4326
+}
+
+.order-item-container .img-fly {
+    width: 1.024rem;
+    height: 1.024rem
+}
+
+.order-item-container .status-text {
+    font-size: .512rem;
+    color: #3540a5
+}
+
+.order-item-container .font-bold {
+    font-weight: 700
+}
+
+.order-item-container .other-info {
+    padding-top: .64rem;
+    font-size: .64rem;
+    line-height: 1.06667rem
+}
+
+.order-item-container .order-other-info {
+    font-size: .512rem;
+    color: #9a9a9a
+}
+
+.order-item-container .order-icon {
+    width: .98133rem;
+    height: .98133rem;
+    margin-right: .21333rem
+}
+
+.order-item-container .order-info {
+    padding: .42667rem
+}
+
+.order-item-container .order-operate {
+    padding: 0 .42667rem;
+    text-align: right
+}
+
+.order-item-container .copy {
+    float: right;
+    padding-left: .42667rem;
+    border-left: 1PX solid #f0f0f0;
+    color: #3540a5;
+    font-size: .512rem
+}
+
+.order-item-container .payment-text {
+    float: right;
+    color: #000
+}
+
+.order-item-container .red-text {
+    color: #ff4326
+}
+
+.order-item-container .station {
+    font-size: .59733rem
+}
+
+.order-item-container .order-status {
+    font-size: .512rem
+}

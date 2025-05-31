@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的包裹</title>
+    <style>
+        /* 根据第一个模板调整的样式 */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .card {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card-header {
+            padding: 15px;
+            background-color: #f9f9f9;
+            color: #333;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .card-header:hover {
+            background-color: #f1f1f1;
+        }
+
+        .order-number {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .tracking-info a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .tracking-info a:hover {
+            color: #0056b3;
+        }
+
+        .card-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .right {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .button-ssl {
+             background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .status {
+            font-size: 15px;
+            color: green;
+            font-weight: bold;
+        }
+
+        .sensitive {
+            color: red;
+            text-shadow: 0 0 5px yellow;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            .card-header {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>我的包裹</h1>
+    {% set total_packages = packages|length %}
+    {% for package in packages %}
+    <div class="card">
+        <div class="card-header" onclick="toggleContainer(this)">
+            <div class="order-number">{{ total_packages - loop.index + 1 }}:</div>
+            <div class="tracking-info">
+                <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank">{{ package.tracking_number }}</a>
+                <p>{{ package.item_name }} {{ package.note }}</p>
+
+            </div>
+            <div class="right">
+                <span class="cargo-type">{{ package.cargo_type }}</span>
+                <span class="status">{{ package.status }}</span>
+                <button class="toggle-button">展开</button>
+
+            </div>
+        </div>
+        <div class="card-content">
+            <!-- 包裹详细信息 -->
+            <p>包裹id：{{ package.id }}</p>
+            <p>快递单号: <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank">{{ package.tracking_number }}</a></p>
+            <p>快递公司: {{ package.courier_company }}</p>
+            <p>商品名称: {{ package.item_name }}</p>
+            <p>重量: {{ package.weight }}</p>
+            <p>尺寸: {{ package.size }}</p>
+            <p>数量: {{ package.quantity }}</p>
+            <p>备注: {{ package.note }}</p>
+
+
+            <div class="right">
+    <div>
+        <p>状态: {{ package.status }}</p>
+        <p>货物类型: {{ package.cargo_type }}</p>
+        <!-- 修改按钮 -->
+        <button class="modify-button" onclick="modifyPackage(this)">修改</button>
+        <!-- 删除按钮 -->
+        <button class="delete-button button-ssl" onclick="deletePackage({{ package.id }})">删除</button>
+    </div>
+</div>
+
+
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <script>
+        function toggleContainer(element) {
+            const container = element.nextElementSibling;
+            const buttons = element.querySelectorAll('button');
+            let isExpanded = container.style.display === "block";
+            container.style.display = isExpanded ? "none" : "block";
+            buttons.forEach(button => {
+                if (button.textContent === "展开") button.textContent = isExpanded ? "展开" : "收起";
+                else if (button.textContent === "收起") button.textContent = isExpanded ? "展开" : "收起";
+            });
+        }
+
+        // 设置敏感货和普通货的颜色
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.card').forEach(function(card) {
+                const cargoType = card.querySelector('.cargo-type').textContent.trim();
+                if (cargoType === '敏感货') {
+                    card.querySelector('.cargo-type').style.color = 'red';
+                    card.querySelector('.cargo-type').style.textShadow = '0 0 5px yellow';
+                }
+            });
+        });
+         // 删除包裹的函数
+    function deletePackage(packageId) {
+        // 发送 AJAX 请求以删除包裹
+        fetch('/delete_package', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: packageId, // 发送要删除的包裹的 ID
+            }),
+        })
+        .then(response => {
+            if (response.ok) {
+                // 如果删除成功，重新加载页面以更新列表
+                window.location.reload();
+            } else {
+                // 如果删除失败，显示错误消息
+                console.error('Failed to delete package');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    // 修改包裹的函数
+    function modifyPackage(button) {
+        // 根据需要实现修改包裹的逻辑
+        console.log('Modify package:', button.parentElement.previousElementSibling.textContent);
+    }
+    </script>
+</body>
+
+</html>
+
+
+
+

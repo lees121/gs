@@ -1,0 +1,13 @@
+/* mobile.css */
+
+/* 媒体查询：针对小屏幕设备调整布局 */
+@media only screen and (max-width: 600px) {
+    .container {
+        width: 100%
+    }
+    input[type="text"],
+    input[type="submit"] {
+        width: calc(100% - 20px);
+        margin-bottom: 10px;
+    }
+}

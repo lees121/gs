@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择地址</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .address-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            height: 60px;
+        }
+
+        .address-info {
+            flex-grow: 1;
+        }
+
+        .address-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .address-details h3,
+        .address-details p {
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .radio-container {
+            flex-shrink: 0;
+        }
+
+        .button-style {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            margin: 20px auto 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-style:hover {
+            background-color: #007bff;
+        }
+        .button-ssl {
+           /* background-color: #da2d4a;
+            color: #fff;*/
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            margin: 20px auto 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+        }
+
+        /* 媒体查询 */
+        @media (max-width: 600px) {
+            .address-card {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+            }
+
+            .address-details {
+                margin-bottom: 10px;
+            }
+
+            .button-style {
+                width: auto;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>选择地址</h1>
+        <form id="addressForm">
+            <!-- 地址列表渲染部分，使用服务器端模板语言渲染 -->
+            {% if addresses %}
+                {% for address in addresses %}
+                    <div class="address-card" id="address_{{ address.id }}">
+                        <div class="radio-container">
+                            <input type="radio" name="selected_address" value="{{ address.id }}" id="addr_{{ address.id }}">
+                            <label for="addr_{{ address.id }}">选择</label>
+                        </div>
+                        <div class="address-info">
+                            <div class="address-details">
+                                <h3>{{ address.name }}</h3>
+                                <p>{{ address.phone }}</p>
+                                <details>
+                                    <summary>查看详情</summary>
+                                    <div class="details-content">
+
+                                        <p>地址: {{ address.address }}</p>
+                                        <p>邮编: {{ address.postcode }}</p>
+                                        <p>城市: {{ address.city }}</p>
+                                        <button type="button" class="delete-button button-ssl" onclick="confirmDelete({{ address.id }})">删除</button>
+                                        <button type="button" class="edit-button button-style" onclick="location.href='/edit_address/{{ address.id }}'">修改</button>
+                                        <!-- 更多信息可以继续添加 -->
+                                    </div>
+                                </details>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-addresses">没有可选的地址。</p>
+            {% endif %}
+
+            <!-- 跳转链接 -->
+            <a href="/add_address" class="button-style">添加地址</a>
+
+        </form>
+    </div>
+
+   <script>
+        // 确认删除的JavaScript函数
+     function confirmDelete(addressId) {
+    if (confirm('确定要删除此地址吗？')) {
+        fetch('/delete_address', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `address_id=${encodeURIComponent(addressId)}`
+        })
+        .then(response => response.json()) // 解析JSON响应
+        .then(data => {
+            if(data.status === 'success') {
+                // 删除操作成功，移除对应的地址卡片
+                document.getElementById('address_' + addressId).remove();
+                alert('删除成功');
+            } else {
+                // 显示错误消息
+                alert('删除失败：' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('请求失败:', error);
+            alert('删除失败：' + error);
+        });
+    }
+}
+    </script>
+</body>
+</html>

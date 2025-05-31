@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>已入库包裹</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 100px; /* 设置卡片高度为100px */
+            overflow: hidden; /* 隐藏超出卡片高度的内容 */
+            display: flex; /* 设置卡片内部为弹性布局 */
+            justify-content: space-between; /* 设置水平方向的内容在卡片内部均匀分布 */
+            align-items: center; /* 设置垂直方向的内容在卡片内部居中 */
+        }
+
+        .card-header {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .card-content {
+            font-size: 16px;
+        }
+
+        .card-content p {
+            margin: 0; /* 清除段落标签的默认外边距 */
+        }
+
+        .right {
+            display: flex; /* 设置内容区域为横向布局 */
+            justify-content: flex-end; /* 将内容右对齐 */
+            align-items: flex-end; /* 将内容底部对齐 */
+        }
+
+        @media only screen and (max-width: 600px) {
+            .card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center; margin-top: 20px;">已入库的包裹</h1>
+    <!-- 卡片列表 -->
+     {% for package in processed_packages %}
+    <div class="card">
+        <div class="card-header">ID: {{ package.id }}</div>
+        <div class="card-content">
+            <!-- 包裹详细信息 -->
+            <p>快递单号:<a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank">{{ package.tracking_number }}</a></p>
+            <p>快递公司: {{ package.courier_company }}</p>
+            <p>商品名称: {{ package.item_name }}</p>
+            <p>重量: {{ package.weight }}</p>
+            <!--<p>尺寸: {{ package.size }}</p>-->
+            <p>数量: {{ package.quantity }}</p>
+            <p>备注: {{ package.note }}</p>
+        </div>
+        <div class="right">
+            <div>
+                <p>货物类型: {{ package.cargo_type }}</p>
+                <p>状态: {{ package.status }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+
+</html>

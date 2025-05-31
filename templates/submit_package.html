@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加包裹</title>
+</head>
+
+<body>
+    <h1>添加包裹</h1>
+    <form method="POST">
+        <label for="warehouse_name">选择仓库：</label>
+        <select name="warehouse_name" id="warehouse_name">
+            {% for warehouse in warehouse_names %}
+            <option value="{{ warehouse.warehouse_name }}">{{ warehouse.warehouse_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="item_name">商品名称：</label>
+        <input type="text" name="item_name" id="item_name" required>
+        <br>
+        <label for="weight">重量：</label>
+        <input type="number" name="weight" id="weight" required>
+        <br>
+        <label for="size">尺寸：</label>
+        <input type="text" name="size" id="size" required>
+        <br>
+        <label for="quantity">数量：</label>
+        <input type="number" name="quantity" id="quantity" required>
+        <br>
+        <label for="status">状态：</label>
+        <select name="status" id="status">
+            <option value="未入库">未入库</option>
+            <!-- 可以添加其他状态选项 -->
+        </select>
+        <br>
+        <label for="tracking_number">快递单号：</label>
+        <input type="text" name="tracking_number" id="tracking_number">
+        <br>
+        <label for="courier_company">快递公司：</label>
+        <input type="text" name="courier_company" id="courier_company">
+        <br>
+        <label for="note">备注：</label>
+        <textarea name="note" id="note"></textarea>
+        <br>
+        <input type="submit" value="提交">
+    </form>
+</body>
+
+</html>

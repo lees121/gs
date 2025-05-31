@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单支付状态</title>
+    <!-- 这里添加您的样式表链接和JavaScript脚本 -->
+</head>
+<body>
+    <h1>订单支付状态</h1>
+    <div>
+        <h2>订单详情</h2>
+        <p>订单ID: {{ order_info.id }}</p>
+        <p>订单金额: {{ order_info.amount }}</p>
+        <!-- 在这里添加其他订单详情字段 -->
+    </div>
+    <div>
+        <h2>支付状态</h2>
+        <p>订单支付成功！</p>
+        <!-- 如果需要显示交易日期时间信息，可以添加以下内容 -->
+        <p>交易日期时间: {{ transaction_datetime }}</p>
+    </div>
+</body>
+</html>
+

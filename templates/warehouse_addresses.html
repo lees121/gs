@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蜂盒国际仓库地址一键复制</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: 300px;
+        }
+        .card h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .card p {
+            margin: 5px 0;
+        }
+        .copy-button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .copy-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+  <!--  <h1 style="text-align: center;">仓库地址</h1>-->
+    {% for warehouse in warehouse_data %}
+        {% if member_id %}
+
+        <h2>{{ warehouse.warehouse_name }}</h2>
+    <div class="card">
+         <p>您的会员ID是: [{{ member_id }}]</p>
+
+
+         <p><strong>联系人:</strong> {{ warehouse.warehouse_contact_person }}仓{{ member_id }}号</p>
+         <p><strong>电话号码:</strong> {{ warehouse.warehouse_phone_number }}</p>
+         <p><strong>邮编:</strong> {{ warehouse.warehouse_postcode }}</p>
+
+        <p><strong>地址:</strong> {{ warehouse.warehouse_address }}转{{ member_id }}号</p>
+         {% else %}
+            <p>会员ID无法获取，请重新登录。</p>
+{% endif %}
+
+
+
+        <button class="copy-button" onclick="copyToClipboard('{{ warehouse.warehouse_contact_person }}仓{{ member_id }}号,{{ warehouse.warehouse_phone_number }},{{ warehouse.warehouse_address }}转{{ member_id }}仓位,{{ warehouse.warehouse_postcode }}')">一键复制</button>
+    </div>
+    {% endfor %}
+
+<div>
+   <p>提示
+温警提示:1，您可以直接在下方一键复制信息，在淘宝/京东等平台购物时填写我们的地址和您的ID号，请在邮寄物品后及时告知我们的客服，我们会收到货会在系统自动入库您的包裹哦，如果发现签收2天未入库，可联系寄客服微信提醒安排入库(避免被屏蔽包裹ID)，2.寄货来时收件人栏需要填实名请注意填写格式:填写您的中文名-您的ID号，如:蜂盒国际仓
+- XXXXX
+</p>
+</div>
+
+
+
+    <script>
+        // 复制按钮点击事件
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    alert('已复制到剪贴板！');
+                })
+                .catch((error) => {
+                    console.error('复制失败:', error);
+                    alert('复制失败，请手动复制！');
+                });
+        }
+    </script>
+    <!-- 检查用户是否已登录，并显示用户名和会员ID -->
+
+
+
+</body>
+</html>

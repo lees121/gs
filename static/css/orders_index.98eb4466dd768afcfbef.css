@@ -1,0 +1,194 @@
+.custom-nav-container {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    color: #333;
+    z-index: 999;
+    background: #fff
+}
+
+.custom-nav-container.transparent {
+    background: 0 0;
+    color: #fff
+}
+
+.custom-nav-container .nav-wrap {
+    font-size: .64rem;
+    position: relative
+}
+
+.custom-nav-container .nav-wrap .at-icon {
+    padding-left: .42667rem;
+    height: 100%
+}
+
+.custom-nav-container .nav-wrap .title {
+    position: absolute;
+    font-size: .68267rem;
+    font-weight: 700;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%)
+}
+
+.custom-nav-container .custom-nav-container::after {
+    content: '';
+    position: absolute;
+    height: 2.13333rem
+}
+
+page {
+    background-color: #f5f5f5
+}
+
+.orders-container {
+    min-height: 100%;
+    padding-bottom: -webkit-calc(3.41333rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(3.41333rem + env(safe-area-inset-bottom))
+}
+
+.orders-container .opt-container {
+    background-color: #fff
+}
+
+.orders-container .opt-container .head-title {
+    color: #333;
+    text-align: center;
+    position: relative
+}
+
+.orders-container .opt-container .wrap {
+    height: 2.13333rem
+}
+
+.orders-container .opt-list,.orders-container .pay,.orders-container .bosts {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.orders-container .opt-list {
+    padding: 1.024rem 0;
+    color: #444;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    background-color: #fff;
+    -webkit-justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-bottom: .42667rem
+}
+
+.orders-container .pay {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .42667rem;
+    font-size: .512rem;
+    color: #444;
+    background-color: #fff
+}
+
+.orders-container .bosts {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .42667rem;
+    font-size: .512rem;
+    color: #444;
+    background-color: #fff
+}
+
+
+.orders-container .img-opt {
+    width: 1.62133rem;
+    height: 1.408rem
+}
+
+.orders-container .opt-item {
+    margin: .42667rem 0;
+    width: 25%;
+    color: #282828;
+    font-size: .512rem;
+    position: relative
+}
+
+.orders-container .qty-info {
+    position: absolute;
+    left: -webkit-calc(50% + .34133rem);
+    left: calc(50% + .34133rem)
+}
+
+.orders-container .order-tab {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #fff;
+    -webkit-justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly
+}
+
+.orders-container .tab-title {
+    color: #282828;
+    padding: .64rem 0
+}
+
+.orders-container .tab-title.actived {
+    border-bottom: .08533rem solid #3540a5;
+    color: #282828
+}
+
+.orders-container .order-list {
+    padding: .64rem
+}
+
+.orders-container .main-btn,.orders-container .main-plain-btn {
+    width: auto;
+    margin: 0;
+    display: inline-block;
+    font-size: .59733rem;
+    margin-left: .64rem
+}
+
+.orders-container .express-btn {
+    border-color: #ccc
+}
+
+.orders-container .invoice-flex {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.orders-container .content {
+    min-height: 0
+}
+
+.orders-container .remark {
+    display: grid;
+    gap: .21333rem;
+    grid-template-columns: repeat(3,1fr);
+    padding-top: .21333rem
+}
+
+.orders-container .remark .remark-image {
+    width: 100%
+}

@@ -1,0 +1,90 @@
+<!-- edit_address.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- ... 其他头部信息 ... -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑地址</title>
+      <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 95%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="hidden"], input[type="submit"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            align-self: center;
+            margin-top: 20px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        /* 媒体查询，用于移动端优化 */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            input[type="text"], input[type="hidden"], input[type="submit"] {
+                width: 100%; /* 确保输入框宽度适应屏幕 */
+            }
+            input[type="submit"] {
+                width: calc(100% - 20px); /* 适应屏幕宽度，减去padding */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>编辑地址</h1>
+        <form method="post" action="{{ url_for('edit_address') }}">
+            <input type="hidden" name="address_id" value="{{ address.id }}">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" value="{{ address.name }}" required>
+            <label for="address">地址:</label>
+            <input type="text" id="address" name="address" value="{{ address.address }}" required>
+            <label for="phone">电话:</label>
+            <input type="text" id="phone" name="phone" value="{{ address.phone }}" required>
+            <label for="postcode">邮编:</label>
+            <input type="text" id="postcode" name="postcode" value="{{ address.postcode }}" required>
+            <label for="city">城市:</label>
+            <input type="text" id="city" name="city" value="{{ address.city }}" required>
+            <input type="submit" value="保存修改">
+        </form>
+    </div>
+    <!-- ... 其他内容 ... -->
+</body>
+</html>

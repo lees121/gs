@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户主页</title>
+    <link rel="icon" type="image/png" href="/uploads/20240526172545_6657.png">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+
+
+    <!-- 引入图标字体
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+-->
+    <!-- CSS样式 -->
+    <style>
+
+
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+           /*padding: 20px;*/
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .nav-links {
+
+
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .icon i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        /* 新增样式 */
+        .content {
+            display: none; /* 初始隐藏内容 */
+            margin-top: 20px;
+        }
+
+        /* 新增样式 */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        /* 新增样式 */
+        .horizontal-layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 新增样式 */
+        .sub-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        /* 新增样式 */
+        .sub-nav a {
+            text-decoration: none;
+            color: #333;
+            font-size: 12px;
+            margin: 5px;
+            width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 新增样式 */
+        .sub-nav .icon i {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .text {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        font-weight: bold;
+    }
+
+
+
+
+
+        body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.track-links {
+    display: flex;
+    justify-content: center;
+
+    top: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Light background color for the bar */
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add some shadow for depth */
+}
+
+.track-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #000; /* Button text color */
+    background-color: #fff; /* Button background color */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; /* Light border */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* Transition for hover effect */
+}
+
+.track-button:hover {
+    background-color: #e9ecef; /* Light grey background color on hover */
+    color: #0056b3; /* Change text color on hover */
+}
+.nav-links {
+    max-width: 650px;
+}
+    </style>
+
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 15px 20px;
+    background-color: #4caf50;
+
+    color: white;
+    cursor: pointer;
+
+  }
+  .card-header.active {
+    background-color: #388e3c;
+
+  }
+  .sub-header {
+    background-color: #cfd8dc;
+    color: #333;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+
+
+
+  }
+  .sub-header.active {
+    background-color: #b0bec5;
+  }
+  .sub-content {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #e8f5e9; /* 浅绿色背景 */
+    border-left: 3px solid #4caf50; /* 绿色边框 */
+    /* 默认不显示 */
+    display: none;
+  }
+  table {
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #81c784;
+    color: white;
+  }
+  ol {
+    margin-top: 15px;
+    padding-left: 20px;
+  }
+  ol li {
+    margin-bottom: 5px;
+  }
+</style>
+
+
+</head>
+<body>
+    <div class="container">
+        <!-- <h1>欢迎回来，{{ username }}！</h1>
+
+        欢迎布局区域
+        <div class="welcome">
+            <p>这里是你的个人主页，你可以在下方的导航中查看和管理你的信息。</p>
+        </div>
+
+
+
+
+        首页区域 -->
+
+        <div class="content" id="homeContent" style="display: none;">
+            {% include 'other.html' %}
+        </div>
+
+
+
+
+        <!-- 搜索区域 -->
+        <div class="content" id="searchContent" style="display: none;">
+             <img src="https://ts1.cn.mm.bing.net/th/id/R-C.669ee8bd2b70829cd04e3887c76b9ea4?rik=FiBy6UCOy7Cwhg&riu=http%3a%2f%2fwww.behosoft.com%2fuploadfile%2f2017%2f1116%2f20171116025254466.jpg&ehk=qUcgwQ3ue7uXhHI%2bbyZI%2be0tGI8XRqS%2f6BoB8MXWiRg%3d&risl=&pid=ImgRaw&r=0"
+     style="width: 100%; height: auto; object-fit: contain; object-position: center;">
+            <div class="track-links">
+
+
+                <a href="/track" class="track-button">空运追踪</a>
+                <a href="/track_yundi" class="track-button">海运追踪</a>
+
+            </div>
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+        <!-- 运费查询区域 -->
+        <div class="content" id="shippingContent" style="display: none;" >
+            <img src="https://ts1.cn.mm.bing.net/th/id/R-C.86c2cc7e0c1573b15a153ad8452ed2a3?rik=pxjjQ0ok814Sdw&riu=http%3a%2f%2fpic.ntimg.cn%2ffile%2f20170713%2f5533146_101259715037_2.jpg&ehk=cXoDMRFYazlBYgwHfT1Q6adA3Bi2A2r5%2fO5bs4ofppk%3d&risl=&pid=ImgRaw&r=0"
+     style="width: 100%; height: auto; object-fit: contain; object-position: center;">
+           <div class="card">
+  <div class="card-header" onclick="toggleCard(event, this)">西马（空运）查看详细</div>
+  <div class="card-content" style="display: none;" >
+    <div class="sub-header" onclick="toggleSubContent(event, this)">西马空运（普货）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>Linelear, NINJA</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首1kg 30元--续1kg 29元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>25元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>24元/kg</td></tr>
+        </table>
+        <table>
+          <caption>GDEX, Skynet</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首1kg 31元--续1kg 30元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>26元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>25元/kg</td></tr>
+        </table>
+      </div>
+      <p>特快时效：3-5天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+
+    <div class="sub-header" onclick="toggleSubContent(event, this)">西马空运（敏感）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>Linelear, NINJA</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首重1kg 35元--续1kg 32元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>27元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>26元/kg</td></tr>
+        </table>
+        <table>
+          <caption>GDEX, Skynet</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首重1kg 36元--续1kg 33元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>28元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>27元/kg</td></tr>
+        </table>
+      </div>
+      <p>特快时效：4-7天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+           <div class="card">
+  <div class="card-header" onclick="toggleCard(event, this)">东马（空运）查看详细</div>
+  <div class="card-content" style="display: none;" >
+    <div class="sub-header" onclick="toggleSubContent(event, this)">东马空运（普货）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>ABX</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>50元/kg</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>45元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>44元/kg</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：4-7天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+
+    <div class="sub-header" onclick="toggleSubContent(event, this)">东马空运（敏感）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>ABX</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>53元/kg</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>47元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>46元/kg</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：5-10天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+           <div class="card">
+  <div class="card-header" onclick="toggleCard(event, this)">新加坡（空运）查看详细</div>
+  <div class="card-content" style="display: none;" >
+    <div class="sub-header" onclick="toggleSubContent(event, this)">新加坡空运（普货）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>J&T Airpak</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-10kg</td><td>首1kg 46元--续1kg 29元</td></tr>
+          <tr><td></td><td></td></tr>
+
+          <tr><td>10.1kg以上</td><td>28元/kg</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：3-5天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+
+    <div class="sub-header" onclick="toggleSubContent(event, this)">新加坡空运（敏感）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>J&T Airpak</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-10kg</td><td>首重1kg 51元--续1kg 33元</td></tr>
+
+          <tr><td>10.1kg以上</td><td>32元/kg</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：4-7天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+  </div>
+</div>
+           <div class="card">
+  <div class="card-header" onclick="toggleCard(event, this)">西马（海运）查看详细</div>
+  <div class="card-content" style="display: none;" >
+    <div class="sub-header" onclick="toggleSubContent(event, this)">西马（海运小包）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>Best</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-10kg</td><td>首1kg 25元--续1kg 9元</td></tr>
+
+          <tr><td>10.1kg以上</td><td>9元/kg</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：15-25天</p>
+
+    </div>
+
+    <div class="sub-header" onclick="toggleSubContent(event, this)">西马（海运大货）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>罗里</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>最低0.3m³</td><td>219元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>0.4-10m³</td><td>730元/m³</td></tr>
+          <tr><td>10.1m³以上</td><td>720元/m³</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：15-25天</p>
+
+    </div>
+  </div>
+</div>
+           <div class="card">
+  <div class="card-header" onclick="toggleCard(event, this)">东马（海运）查看详细</div>
+  <div class="card-content" style="display: none;" >
+    <div class="sub-header" onclick="toggleSubContent(event, this)">东马（海运小包）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>Best</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-10kg</td><td>首1kg 27元--续1kg 15元</td></tr>
+
+          <tr><td>10.1kg以上</td><td>15元/kg</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：20-30天</p>
+
+    </div>
+
+    <div class="sub-header" onclick="toggleSubContent(event, this)">东马（海运大货）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>罗里</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>最低0.3m³</td><td>600元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>0.4-10m³</td><td>1200元/m³</td></tr>
+          <tr><td>10.1m³以上</td><td>1100元/m³</td></tr>
+        </table>
+
+      </div>
+      <p>特快时效：20-30天</p>
+
+    </div>
+  </div>
+</div>
+  <!--         <div class="card">
+  <div class="card-header" onclick="toggleCard(event, this)">新加坡（海运）查看详细</div>
+  <div class="card-content" style="display: none;" >
+    <div class="sub-header" onclick="toggleSubContent(event, this)">新加坡（海运小包）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>Linelear, NINJA</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首1kg 30元--续1kg 29元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>25元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>24元/kg</td></tr>
+        </table>
+        <table>
+          <caption>GDEX, Skynet</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首1kg 31元--续1kg 30元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>26元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>25元/kg</td></tr>
+        </table>
+      </div>
+      <p>特快时效：3-5天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+
+    <div class="sub-header" onclick="toggleSubContent(event, this)">新加坡（海运大货）查看</div>
+    <div class="sub-content">
+      <div class="table-container">
+        <table>
+          <caption>Linelear, NINJA</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首重1kg 35元--续1kg 32元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>27元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>26元/kg</td></tr>
+        </table>
+        <table>
+          <caption>GDEX, Skynet</caption>
+          <tr><th>重量范围</th><th>价格</th></tr>
+          <tr><td>1-3kg</td><td>首重1kg 36元--续1kg 33元</td></tr>
+          <tr><td></td><td></td></tr>
+          <tr><td>3.1-10kg</td><td>28元/kg</td></tr>
+          <tr><td>10.1kg以上</td><td>27元/kg</td></tr>
+        </table>
+      </div>
+      <p>特快时效：4-7天</p>
+      <ol>
+        <li>超大件：尺寸超130CM或者重量超25KG需加收120元一票。</li>
+        <li>本价格按整kg计算，0.1kg=1kg。</li>
+        <li>免抛18KG，超过按照半抛处理(体积/6000)。例如：体积重23KG 实重4KG 就是收半泡 计费13.5KG；体积重23kg，实重6kg，就是免泡，计费6KG。</li>
+      </ol>
+    </div>
+  </div>
+</div>-->
+
+
+
+        </div>
+
+        <!-- 新我的区域-->
+        <div class="page-container">
+            <div class="content" id="mmyContent" style="display: block;">
+
+               {% include 'myContent.html' %}
+            </div>
+        </div>
+
+
+<!-- 我的区域
+<div class="horizontal-layout" style="background-color: #f2f2f2; padding: 10px;">
+    <div class="content" id="myContent" style="display: flex; align-items: center;">
+        <div style="margin-right: 20px;">
+            <div class="avatar" style="width: 50px; height: 50px;">
+                <img src="/uploads/20240316002243_9288.jpg" alt="用户头像" style="width: 50px; height: 50px; border-radius: 50%;">
+            </div>
+        </div>
+
+        <div style="margin-left: auto; font-size: 14px; display: flex; flex-direction: column; justify-content: center;">
+
+
+        </div>
+
+    <a class="text"></a>
+
+        <div class="text" style="margin-bottom: 3px;">ID:{{ member_id }}   </div>
+    <a class="text"></a>
+        <div class="text" style="margin-bottom: 3px;">昵称:{{ username }}</div>
+        <div>
+            <a href="/wallet">余额充值</a>
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+</div>
+
+<div class="content" id="myContent" style="display: flex; align-items: center;">
+           <div class="horizontal-layout">
+
+
+-->
+
+
+
+<!-- 全部包裹管理导航
+                <div style="margin-top: 20px;">
+
+                    <div class="sub-nav">
+                        <a href="/wallet"><span class="icon"><i class="fas fa-hand-holding-usd"></i></span><br><span></span>余额：{{ balance }}元</a>
+                        <a href="/add_package"><span class="icon"><i class="fas fa-box-open"></i></span><br>包裹预报</a>-->
+
+                        <!-- <a href="/create_order"><span class="icon"><i class="fas fa-boxes"></i></span><br>申请打包</a>-->
+                        <!--<a href="/select_packages"><span class="icon"><i class="fas fa-boxes"></i></span><br>申请打包</a>-->
+
+                    </div>
+                <!-- 全部包裹管理导航
+                <div style="margin-top: 20px;">
+                    <p>全部包裹管理</p>
+                    <div class="sub-nav">
+
+
+                        <a href="/my_packages"><span class="icon"><i class="fas fa-box"></i></span><br>未入库</a>
+                        <a href="/view_processed_packages"><span class="icon"><i class="fas fa-archive"></i></span><br>已入库</a>
+                        <a href="#"><span class="icon"><i class="fas fa-boxes"></i></span><br>已打包</a>
+                        <a href="#"><span class="icon"><i class="fas fa-shipping-fast"></i></span><br>已发货</a>
+                        <a href="#"><span class="icon"><i class="fas fa-truck-loading"></i></span><br>已收货</a>
+                    </div>-->
+                                    <!-- 水平布局区域2
+<div style="margin-top: 20px; background-color: #f2f2f2; padding: 10px;">
+    <p>我的订单</p>
+    <div class="sub-nav">
+        <a href="/my_orders">
+            <span class="icon"><i class="fas fa-search-dollar"></i></span><br>
+            <span>待查验</span>
+        </a>
+        <a href="/pending_orders">
+            <span class="icon"><i class="fas fa-hand-holding-usd"></i></span><br>
+            <span>待付款</span>
+        </a>
+        <a href="#">
+            <span class="icon"><i class="fas fa-truck"></i></span><br>
+            <span>待发货</span>
+        </a>
+        <a href="#">
+            <span class="icon"><i class="fas fa-shipping-fast"></i></span><br>
+            <span>已发货</span>
+        </a>
+        <a href="#">
+            <span class="icon"><i class="fas fa-check-circle"></i></span><br>
+            <span>已完成</span>
+        </a>
+         <a href="#">
+            <span class="icon"><i class="fas fa-check-circle"></i></span><br>
+            <span>已完成</span>
+        </a>
+    </div>
+</div>
+-->
+
+<!-- 水平布局区域3
+<div class="horizontal-layout">
+    <div style="margin-top: 20px;">
+        <p>其他功能</p>
+        <div class="sub-nav">
+            <a href="/my_addresses"><span class="icon"><i class="fas fa-map-marker-alt"></i></span><br>收货地址</a>
+            <a href="/warehouse_addresses"><span class="icon"><i class="fas fa-warehouse"></i></span><br>仓库地址</a>
+            <a href="/create_order"><span class="icon"><i class="fas fa-cog"></i></span><br>设置</a>
+            <a href="/logout"><span class="icon"><i class="fas fa-sign-out-alt"></i></span><br>退出登录</a>
+        </div>
+    </div>
+</div>
+</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>-->
+
+    <!-- 导航链接 -->
+    <div class="nav-links">
+        <a href="javascript:void(0);" class="icon" onclick="toggleContent('homeContent')"><i class="fas fa-home"></i><br>首页</a>
+
+        <a href="javascript:void(0);" class="icon" onclick="toggleContent('searchContent')"><i class="fas fa-search"></i><br>搜索</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleContent('shippingContent')"><i class="fas fa-truck"></i><br>运费查询</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleContent('mmyContent')"><i class="fas fa-user"></i><br>我的</a>
+        <!--<a href="javascript:void(0);" class="icon" onclick="toggleContent('myContent')"><i class="fas fa-user"></i><br>我的</a>-->
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function toggleContent(contentId) {
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                if (content.id === contentId) {
+                    content.style.display = "block"; // 显示内容
+                } else {
+                    content.style.display = "none"; // 隐藏内容
+                }
+            });
+        }
+    </script>
+<!-- JavaScript 脚本 -->
+<script>
+  // 这个函数用于控制主卡片内容的展开和收起
+  function toggleCard(event, headerElement) {
+    event.preventDefault();
+    var content = headerElement.nextElementSibling;
+    // 切换主卡片内容的显示状态
+    headerElement.classList.toggle('active');
+    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // 这个函数用于控制子内容的展开和收起
+  function toggleSubContent(event, subHeaderElement) {
+    event.preventDefault();
+    var subContent = subHeaderElement.nextElementSibling;
+    // 切换子内容的显示状态
+    subHeaderElement.classList.toggle('active');
+    subContent.style.display = subContent.style.display === 'block' ? 'none' : 'block';
+  }
+</script>
+</body>
+
+</html>
+

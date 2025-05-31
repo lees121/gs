@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择包裹</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+           /* padding: 5px;*/
+        }
+
+        header {
+            text-align: center;
+            padding: 5px 0;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .package-card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .package-card .package-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .package-card .package-header p {
+            margin: 0;
+        }
+
+        .tracking-number-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .tracking-number-link:hover {
+            text-decoration: underline;
+        }
+
+        .dropdown-btn {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .package-body {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .package-body p {
+            margin: 5px 0;
+        }
+
+        .no-packages {
+            text-align: center;
+            color: #666;
+        }
+
+        button[type="submit"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+           /* padding: 20px;*/
+        }
+
+        header {
+            text-align: center;
+            padding: 5px 0;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .package-card {
+            /* ... 其他样式 ... */
+        }
+
+        .fixed-action-btn {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fixed-action-btn button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .fixed-action-btn button:hover {
+            background-color: #2069b2;
+        }
+
+        .package-checkbox {
+            /* ... 其他样式 ... */
+        }
+
+        /* 其他样式保持不变 */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>包裹选择与管理</h1>
+    </header>
+    <div class="container">
+        <form action="/select_packages" method="post" id="packageForm">
+
+            <div class="packages-list">
+                {% if processed_packages %}
+                    {% for package in processed_packages %}
+                    <div class="package-card">
+                        <div class="package-header">
+                            <span class="sequence-number">{{ loop.index }}</span> <!-- 序号使用 Jinja2 模板语法 -->
+                            <input type="checkbox" name="selected_packages" value="{{ package.tracking_number }}">
+                            <td>
+                                {{ package.tracking_number }}
+                               <!-- <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank" class="tracking-number-link">
+                                    {{ package.tracking_number }}
+                                </a>-->
+                            </td>
+                            <a>{{ package.cargo_type }}<p>{{ package.status }}</p></a>
+                            <button class="dropdown-btn" type="button">更多</button>
+                        </div>
+                        <div class="package-body">
+                            <p>包裹 ID：{{ package.id }}</p>
+                            <p>快递单号: <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank" class="tracking-number-link">{{ package.tracking_number }}</a></p>
+                            <p>快递公司: {{ package.courier_company }}</p>
+                            <p>商品名称: {{ package.item_name }}</p>
+                            <p>重量: {{ package.weight }}</p>
+                            <p>重量: <span class="package-weight">{{ package.weight }}</span></p>
+                            <p>尺寸: {{ package.size }}</p>
+                            <p>数量: {{ package.quantity }}</p>
+                            <p>备注: {{ package.note }}</p>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                {% else %}
+                    <p class="no-packages">当前没有可用的包裹。</p>
+                {% endif %}
+
+            </div>
+
+ <!-- 按钮移动到底部 -->
+
+      <div class="fixed-action-btn">
+        <label for="select-all-checkbox" class="select-all-label">
+            <input type="checkbox" id="select-all-checkbox" class="select-all-checkbox">
+            全选
+            <div id="total-weight-display">总重量: 0</div>
+
+        </label>
+        <button type="submit" class="submit-btn">下一步选中提交</button>
+    </div>
+        <!--<div class="fixed-action-btn">
+     其他内容
+    <div id="total-weight-display">总重量: 0</div>
+</div>-->
+        </form>
+    </div>
+
+    <script>
+        // 为每个 '.dropdown-btn' 按钮添加点击事件监听器
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // 找到点击按钮最近的父级包裹卡片元素
+                const card = this.closest('.package-card');
+                // 在包裹卡片中找到 '.package-body' 元素
+                const body = card.querySelector('.package-body');
+                // 切换 '.package-body' 的 display 属性，实现展开或收起详情
+                body.style.display = body.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectAllCheckbox = document.getElementById('select-all-checkbox');
+            var packageCheckboxes = document.querySelectorAll('input[type="checkbox"][name="selected_packages"]');
+
+            selectAllCheckbox.addEventListener('change', function() {
+                var isChecked = this.checked;
+                packageCheckboxes.forEach(function(checkbox) {
+                    checkbox.checked = isChecked;
+                });
+            });
+
+            // 监听包裹复选框的变化，更新全选复选框的状态
+            packageCheckboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    var allChecked = packageCheckboxes.every(function(cb) {
+                        return cb.checked;
+                    });
+                    selectAllCheckbox.checked = allChecked;
+                });
+            });
+        });
+
+    </script>
+<script>
+          document.addEventListener('DOMContentLoaded', function() {
+    var selectAllCheckbox = document.getElementById('select-all-checkbox');
+    var packageCheckboxes = document.querySelectorAll('input[type="checkbox"][name="selected_packages"]');
+    var weightElements = document.querySelectorAll('.package-weight');
+    var totalWeightDisplay = document.getElementById('total-weight-display');
+
+    function calculateTotalWeight() {
+        var totalWeight = packageCheckboxes.reduce((total, checkbox, index) => {
+            return checkbox.checked ? (total + parseFloat(weightElements[index].textContent)) : total;
+        }, 0);
+        return totalWeight;
+    }
+
+    function updateTotalWeightDisplay() {
+        var totalWeight = calculateTotalWeight();
+        totalWeightDisplay.textContent = '总重量: ' + totalWeight.toFixed(2);
+    }
+
+    selectAllCheckbox.addEventListener('change', updateTotalWeightDisplay);
+    packageCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', updateTotalWeightDisplay);
+    });
+
+    // 页面加载完成后，初始化总重量显示
+    updateTotalWeightDisplay();
+});
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var selectAllCheckbox = document.getElementById('select-all-checkbox');
+    var packageCheckboxes = document.querySelectorAll('input[type="checkbox"][name="selected_packages"]');
+    var weightElements = document.querySelectorAll('.package-weight'); // 确保包裹重量的元素有 package-weight 类
+    var totalWeightDisplay = document.getElementById('total-weight-display'); // 获取显示总重量的元素
+
+    // 计算选中包裹的总重量
+    function calculateTotalWeight() {
+        var totalWeight = 0;
+        packageCheckboxes.forEach(function(checkbox, index) {
+            if (checkbox.checked) {
+                totalWeight += parseFloat(weightElements[index].textContent);
+            }
+        });
+        return totalWeight;
+    }
+
+    // 更新总重量显示
+    function updateTotalWeightDisplay() {
+        var totalWeight = calculateTotalWeight();
+        totalWeightDisplay.textContent = '总重量: ' + totalWeight.toFixed(2); // 保留两位小数
+    }
+
+    // 为全选复选框添加事件监听器
+    selectAllCheckbox.addEventListener('change', function() {
+        updateTotalWeightDisplay();
+    });
+
+    // 为每个包裹复选框添加事件监听器
+    packageCheckboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            updateTotalWeightDisplay();
+        });
+    });
+
+    // 页面加载完成后，初始化总重量显示
+    updateTotalWeightDisplay();
+});
+</script>
+</body>
+</html>

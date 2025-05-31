@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传文件</title>
+</head>
+<body>
+    <h1>上传文件</h1>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="image">选择文件：</label>
+        <input type="file" name="image" id="image">
+        <br>
+      <!--  <label for="member_id">会员号：</label>
+        <input type="text" name="member_id" id="member_id">-->
+        <br>
+        <input type="submit" value="上传">
+    </form>
+</body>
+</html>

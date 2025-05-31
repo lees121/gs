@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="flex items-center justify-center min-h-screen bg-zinc-100 dark:bg-zinc-900">
+    <div class="bg-white dark:bg-zinc-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="text-center mb-6">
+            <img src="/uploads/20240316002243_9288.jpg" alt="logo" class="mx-auto mb-4" style="width:60px; height:60px; border-radius:60%; object-fit:cover;" crossorigin="anonymous">
+            <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200">欢迎光临momo集运! 👋</h2>
+            <p class="text-zinc-600 dark:text-zinc-400">请登录您的账户并开始集运</p>
+        </div>
+        <form method="POST" action="/register">
+            <div class="mb-4">
+                <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="username">用户名</label>
+                <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="text" id="username" name="username" placeholder="输入您的用户名" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="wechat">微信号：</label>
+                <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="text" id="wechat" name="wechat" placeholder="输入您的微信" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="email">邮箱：</label>
+                <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="email" id="email" name="email" placeholder="输入您的邮箱" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="phone">手机号：</label>
+                <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="text" id="phone" name="phone" placeholder="输入您的手机号" required>
+            </div>
+            <div class="mb-4 relative">
+                <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="password">密码</label>
+
+                <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="password" id="password" name="password" placeholder="输入密码" required>
+                <button type="button" id="togglePassword" class="absolute right-3 top-10 text-sm text-blue-600 dark:text-blue-400"></button>
+
+            </div>
+
+            <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">登录</button>
+        </form>
+        <div class="text-center mt-6">
+            <p class="text-zinc-600 dark:text-zinc-400">欢迎加入登录 <a href="/login" class="text-blue-600 dark:text-blue-400">登录账户</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.textContent = type === 'password' ? '显示' : '隐藏';
+    });
+</script>
+  </body>
+</html>

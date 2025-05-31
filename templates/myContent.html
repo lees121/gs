@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 设置移动端适配 -->
+    <title>用户信息</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- 引入 Font Awesome 图标库样式表 -->
+    <!-- 引入 Font Awesome 图标库 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ <style>
+        .header {
+            background-image: linear-gradient(135deg, #fdf5e7 10%, #f5d5a1 100%) !important;
+            height: 110px;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+            position: relative;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+           /* width: 100%;*/
+        }
+        .user-img {
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            margin-right: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
+        .user-desc {
+            flex-grow: 1;
+        }
+        .user-nickname {
+            display: block;
+            font-weight: bolder;
+            font-size: 18px;
+            margin-top: 10px;
+            color: #170f07;
+        }
+        .user-username {
+            display: block;
+            margin-top: 5px;
+            color: #70635a;
+        }
+        .user-set {
+            font-size: 24px;
+            color: #70635a;
+            cursor: pointer;
+            position: absolute;
+            top: 3px;
+            right: -125px;
+            transform: translateY(-3px); /* 向上移动30px */
+        }
+        .order {
+            border-radius: 15px;
+            margin: 6px;
+            background-color: #ffffff;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
+        .order span {
+            font-size: 16px;
+            font-weight: bolder;
+            color: #170f07;
+        }
+        .order-button {
+            float: right;
+            background-color: #ff5402;
+            border-radius: 999px;
+            font-size: small;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border: none;
+            margin-top: 10px;
+        }
+        .order-grid-item {
+            text-align: center;
+            padding: 10px;
+        }
+        .order-grid-item .feather {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 24px;
+            color: #70635a;
+        }
+    </style>
+
+    <style type="text/css">
+img[src=""] {
+  opacity: 0;
+}
+
+.taro-img {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  font-size: 0;
+  width: 320px;
+  height: 240px;
+}
+
+.taro-img.taro-img__widthfix {
+  height: 100%;
+}
+
+.taro-img__mode-scaletofill {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-img__mode-aspectfit {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-img__mode-aspectfill {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-img__mode-widthfix {
+  width: 100%;
+}
+
+.taro-img__mode-top {
+  width: 100%;
+}
+
+.taro-img__mode-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.taro-img__mode-left {
+  height: 100%;
+}
+
+.taro-img__mode-right {
+  position: absolute;
+  height: 100%;
+  right: 0;
+}
+
+.taro-img__mode-topright {
+  position: absolute;
+  right: 0;
+}
+
+.taro-img__mode-bottomleft {
+  position: absolute;
+  bottom: 0;
+}
+
+.taro-img__mode-bottomright {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+</style>
+<style type="text/css">
+html, body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+.taro-tabbar__border-white::before {
+  border-top-color: #fff !important;
+}
+
+.taro-tabbar__container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.taro-tabbar__panel {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.taro-tabbar__tabbar {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  transition: bottom .2s, top .2s;
+}
+
+.taro-tabbar__tabbar-top {
+  top: 0;
+}
+
+.taro-tabbar__tabbar-bottom {
+  bottom: 0;
+}
+
+.taro-tabbar__tabbar-hide {
+  display: none;
+}
+
+.taro-tabbar__tabbar-slideout {
+  top: -52px;
+  flex: 0 0;
+}
+
+.taro-tabbar__panel + .taro-tabbar__tabbar-slideout {
+  top: auto;
+  bottom: -52px;
+}
+</style>
+<style type="text/css">
+    input {
+  display: block;
+  height: 24px;
+  text-align: inherit;
+  text-overflow: clip;
+  overflow: hidden;
+  white-space: nowrap;
+}
+</style>
+<style type="text/css">
+    button {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: #000000;
+  background-color: #F8F8F8;
+}
+
+button[plain] {
+  color: #353535;
+  border: 1px solid #353535;
+  background-color: transparent;
+}
+
+button[plain][disabled] {
+  color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #F7F7F7;
+}
+
+button[type=primary] {
+  color: #FFFFFF;
+  background-color: #1AAD19;
+}
+
+button[type=primary][plain] {
+  color: #1aad19;
+  border: 1px solid #1aad19;
+  background-color: transparent;
+}
+
+button[type=primary][plain][disabled] {
+  color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #F7F7F7;
+}
+</style>
+<style type="text/css">
+    body, html{
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+</style>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no,address=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <style>
+    #appLoading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: #fff;
+    }
+    #appLoading .loading {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 160px;
+    }
+  </style>
+    <script>
+    !function(x){function w(){var v,u,t,tes,s=x.document,r=s.documentElement,a=r.getBoundingClientRect().width;if(!v&&!u){var n=!!x.navigator.appVersion.match(/AppleWebKit.*Mobile.*/);v=x.devicePixelRatio;tes=x.devicePixelRatio;v=n?v:1,u=1/v}if(a>=640){r.style.fontSize="40px"}else{if(a<=320){r.style.fontSize="20px"}else{r.style.fontSize=a/320*20+"px"}}}x.addEventListener("resize",function(){w()});w()}(window);
+  </script>
+   <style>
+       @font-face{font-weight:normal;font-style:normal;font-family:"taro";src:url("data:application/x-font-ttf;charset=utf-8;base64, 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") format("truetype")}@-webkit-keyframes taroLoading{0%{-webkit-transform:rotate3d(0,0,1,0deg)}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg)}}@keyframes taroLoading{0%{-webkit-transform:rotate3d(0,0,1,0deg)}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg)}}.taro-modal__content{word-wrap:break-word;word-break:break-all}.taro-modal__foot:after{content:"";position:absolute;left:0;top:0;right:0;height:1px;border-top:1px solid #d5d5d6;color:#d5d5d6;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleY(.5);transform:scaleY(.5)}.taro-model__btn:active{background-color:#eee}.taro-model__btn:active{background-color:#eee}.taro-model__btn:not(:first-child):after{content:"";position:absolute;left:0;top:0;width:1px;bottom:0;border-left:1px solid #d5d5d6;color:#d5d5d6;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleX(.5);transform:scaleX(.5)}.taro-actionsheet__cell:not(:first-child):after{content:"";position:absolute;left:0;top:0;right:0;height:1px;border-top:1px solid #e5e5e5;color:#e5e5e5;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleY(.5);transform:scaleY(.5)}
+   </style>
+
+
+
+
+
+
+    <style>
+        /* 栅格头像和用户信息容器 */
+        .user-info {
+
+            height: 75px; /* 高度 */
+            position: relative; /* 相对定位 */
+
+            align-items: center; /* 垂直居中 */
+            gap: 10px; /* 间距 */
+            padding: 10px; /* 内边距 */
+           /* background-image: url('/uploads/20240316002243_9288.jpg');  背景图片 */
+            background-size: cover; /* 图片填充整个容器 */
+            border-radius: 10px; /* 边框圆角 */
+        }
+      /* 头像样式 */
+.avatar {
+    display: flex; /* 使用弹性盒子布局 */
+    width: 50px; /* 宽度 */
+    height: 50px; /* 高度 */
+    border-radius: 50%; /* 圆形 */
+    background-image: url('/uploads/20240316002243_9288.jpg'); /* 头像图片 */
+    background-size: cover; /* 图片填充整个容器 */
+    margin-right: 3px; /* 右侧外边距 */
+    align-self: center; /* 垂直居中 */
+    margin-top: 30px; /* 向下移动 10px */
+}
+
+
+/* 用户信息容器 */
+.user-details {
+    display: flex; /* 使用弹性盒子布局 */
+
+    flex-direction: column; /* 垂直布局 */
+    gap: 5px; /* 间距 */
+    background-color: rgba(255, 255, 255, 0.5); /* 半透明白色背景 */
+    padding: 10px; /* 内边距调整为适合用户ID和用户名的尺寸 */
+    border-radius: 3px; /* 边框圆角 */
+    width: 90px; /* 宽度 */
+    margin: -60px 0 0 +55px; /* 上移 50px，左移 50px，并使其居中 */
+}
+
+/* 用户名和用户ID样式 */
+#user-id, #username, #balance-display, #balance-recharge {
+    margin: 0; /* 重置外边距 */
+    padding: 0; /* 重置内边距 */
+    text-align: left; /* 文本左对齐 */
+    font-size: 10px; /* 字体大小 */
+}
+
+
+        /* 设置链接样式 */
+        .create_order {
+            position: absolute; /* 绝对定位 */
+            top: 10px; /* 距顶部 10px */
+            right: 10px; /* 距右侧 10px */
+            background-color: white; /* 白色背景 */
+            border-radius: 50%; /* 圆形 */
+            width: 40px; /* 宽度 */
+            height: 40px; /* 高度 */
+            display: flex; /* 使用弹性盒子布局 */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 水平居中 */
+        }
+        .create_order a {
+            color: #4CAF50; /* 图标颜色 */
+            font-size: 24px; /* 图标大小 */
+            text-decoration: none; /* 去除下划线 */
+        }
+/* 会员卡容器样式 */
+#balance-display {
+    display: flex; /* 使用弹性盒子布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: space-between; /* 内容两端对齐 */
+    padding: 10px; /* 内边距 */
+    border-radius: 10px; /* 边框圆角 */
+    background-color: #2E3131; /* 背景颜色 */
+    color: #FFFFFF; /* 文字颜色 */
+    font-family: Arial, sans-serif; /* 字体 */
+    font-size: 16px; /* 字体大小 */
+
+}
+
+/* 余额金额样式 */
+#balance-display p {
+    margin: 0; /* 重置外边距 */
+}
+
+/* 余额充值链接样式 */
+#balance-recharge {
+    text-decoration: none; /* 去除下划线 */
+    color: #FFFFFF; /* 文字颜色 */
+    font-weight: bold; /* 字体加粗 */
+}
+
+/* 悬停时会员卡样式 */
+#balance-display:hover {
+    background-color: #2E3131; /* 悬停时背景颜色 */
+}
+
+/* 移动端样式 */
+@media only screen and (max-width: 300px) {
+    #balance-display {
+                width: 100%; /* 在移动端，宽度适应屏幕 */
+                margin: 0; /* 移除默认边距 */
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+        /* 移动端适配 */
+        @media only screen and (max-width: 300px) {
+            .user-info {
+                width: 100%; /* 在移动端，宽度适应屏幕 */
+                margin: 0; /* 移除默认边距 */
+
+                flex-direction: column; /* 垂直布局 */
+                align-items: center; /* 水平居中 */
+            }
+            .avatar {
+                margin: 0 0 10px; /* 头像底部外边距 */
+
+            }
+         }
+            /* 默认样式 */
+.icon img {
+    width: 80px; /* 调整为适合桌面端的大小 */
+}
+
+/* 当屏幕宽度小于或等于600px时，应用以下样式 */
+@media (max-width: 300px) {
+    .icon img {
+        width: 45px; /* 调整为适合移动端的大小 */
+        border-radius: 10px; /* 创建圆形图标 */
+        background-color: #f2f2f2; /* 设置背景色 */
+        padding: 10px; /* 设置内边距 */
+    }
+}
+            /* 默认样式 */
+body {
+    font-size: 16px; /* 调整为适合桌面端的大小 */
+}
+
+/* 当屏幕宽度小于或等于600px时，应用以下样式 */
+@media (max-width: 300px) {
+    body {
+        font-size: 14px; /* 调整为适合移动端的大小 */
+        border: 10px solid #f2f2f2; /* 创建边框 */
+        border-radius: 10px; /* 创建圆角边缘 */
+        background-color: #f2f2f2; /* 设置背景色 */
+        padding: 10px; /* 设置内边距 */
+    }
+}
+
+
+
+
+/*666*/
+        .custom-nav-container {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    color: #333;
+    z-index: 999;
+    background: #fff
+}
+
+.custom-nav-container.transparent {
+    background: 0 0;
+    color: #fff
+}
+
+.custom-nav-container .nav-wrap {
+    font-size: .64rem;
+    position: relative
+}
+
+.custom-nav-container .nav-wrap .at-icon {
+    padding-left: .42667rem;
+    height: 100%
+}
+
+.custom-nav-container .nav-wrap .title {
+    position: absolute;
+    font-size: .68267rem;
+    font-weight: 700;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%)
+}
+
+.custom-nav-container .custom-nav-container::after {
+    content: '';
+    position: absolute;
+    height: 2.13333rem
+}
+
+page {
+    background-color: #f5f5f5
+}
+
+.orders-container {
+    min-height: 100%;
+    padding-bottom: -webkit-calc(3.41333rem + env(safe-area-inset-bottom));
+    padding-bottom: calc(3.41333rem + env(safe-area-inset-bottom))
+}
+
+.orders-container .opt-container {
+    background-color: #fff
+}
+
+.orders-container .opt-container .head-title {
+    color: #333;
+    text-align: center;
+    position: relative
+}
+
+.orders-container .opt-container .wrap {
+    height: 2.13333rem
+}
+
+.orders-container .opt-list,.orders-container .pay {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
+}
+
+.orders-container .opt-list {
+    padding: 1.024rem 0;
+    color: #444;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    background-color: #fff;
+    -webkit-justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+    text-align: center;
+    margin-bottom: .42667rem
+}
+
+.orders-container .pay {
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: .42667rem;
+    font-size: .512rem;
+    color: #d9001b;
+    background-color: #f2a9b2
+}
+
+.orders-container .img-opt {
+    width: 1.62133rem;
+    height: 1.408rem
+}
+
+.orders-container .opt-item {
+    margin: .42667rem 0;
+    width: 25%;
+    color: #282828;
+    font-size: .512rem;
+    position: relative
+}
+
+.orders-container .qty-info {
+    position: absolute;
+    left: -webkit-calc(50% + .34133rem);
+    left: calc(50% + .34133rem)
+}
+
+.orders-container .order-tab {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    background-color: #fff;
+    -webkit-justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly
+}
+
+.orders-container .tab-title {
+    color: #282828;
+    padding: .64rem 0
+}
+
+.orders-container .tab-title.actived {
+    border-bottom: .08533rem solid #3540a5;
+    color: #282828
+}
+
+.orders-container .order-list {
+    padding: .64rem
+}
+
+.orders-container .main-btn,.orders-container .main-plain-btn {
+    width: auto;
+    margin: 0;
+    display: inline-block;
+    font-size: .59733rem;
+    margin-left: .64rem
+}
+
+.orders-container .express-btn {
+    border-color: #ccc
+}
+
+.orders-container .invoice-flex {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.orders-container .content {
+    min-height: 0
+}
+
+.orders-container .remark {
+    display: grid;
+    gap: .21333rem;
+    grid-template-columns: repeat(3,1fr);
+    padding-top: .21333rem
+}
+
+.orders-container .remark .remark-image {
+    width: 100%
+}
+
+
+
+
+
+
+
+
+
+    </style>
+</head>
+
+<link rel="stylesheet" href="/static/css/orders_index.98eb4466dd768afcfbef.css">
+<link rel="stylesheet" href="/static/css/app.400daf3c187ab3d0a80c.css">
+
+<body>
+
+    <div class="container">
+        <!-- 头像放在左侧 -->
+        <!-- 顶部用户信息 start -->
+        <div class="header">
+            <div class="user-info">
+                <img class="user-img" src="https://pic1.zhimg.com/v2-d1d495d2fab1e960093b1af8611460b8_r.jpg" alt="User Image">
+                <div class="user-desc">
+                    <span class="user-nickname">会员号：{{ member_id }}</span>
+                    <span class="user-username">账号名：{{ username }}</span>
+                </div>
+                <i data-feather="settings" class="user-set" onclick="onSet()"></i>
+            </div>
+        </div>
+     <!-- 余额和余额充值-->
+            <div id="balance-display">
+
+                <a href="/#" id="balance-recharge">余额:¥{{ balance }}</a>
+                <a href="/#" id="balance-recharge">余额充值</a>
+                <a href="/#" id="balance-recharge">交易记录</a>
+
+            </div>
+
+ <!--全部包裹管理导航 -->
+    <div>
+ <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css">-->
+
+<div style="margin-top: 20px;">
+    <div class="sub-nav">
+
+        <!-- 第一个图标链接
+        <a href="/wallet">-->
+        <a>
+            <span class="icon"><i class="ri-coins-line" style="color: black;"></i></span><br>
+            <span></span>余额：{{ balance }}元
+        </a>
+        <a href="/warehouse_addresses"><span class="icon"><i class="fas fa-warehouse"></i></span><br>仓库地址</a>
+        <!-- 第二个图标链接 -->
+        <a href="/add_package">
+            <span class="icon"><i class="ri-truck-line" style="color: black;"></i></span><br>
+            包裹预报
+        </a>
+        <!-- 第三个图标链接
+        <a href="/create_order">
+            <span class="icon"><i class="ri-archive-line" style="color: black;"></i></span><br>
+            申请打包
+        </a>-->
+        <!-- 第四个图标链接 -->
+        <a href="/select_packages">
+            <span class="icon"><i class="ri-archive-line" style="color: black;"></i></span><br>
+            申请打包
+        </a>
+    </div>
+</div>
+ </div>
+
+
+
+
+
+                <!-- 全部包裹管理导航
+                <div style="margin-top: 20px;">
+                    <p>全部包裹管理</p>-->
+                   <!--  <div class="sub-nav">
+                        <a href="/my_packages"><span class="icon"><img src="/uploads/20240526172602_8869.png" alt="未入库"></span><br>未入库</a>
+
+
+                        <a href="/my_packages"><span class="icon"><img src="/uploads/20240526172628_8978.png"></span><br>未入库</a>
+                        <a href="/view_processed_packages"><span class="icon"><i class="fas fa-archive"></i></span><br>已入库</a>
+                        <a href="#"><span class="icon"><i class="fas fa-boxes"></i></span><br>已打包</a>
+                        <a href="#"><span class="icon"><i class="fas fa-shipping-fast"></i></span><br>已发货</a>
+                        <a href="#"><span class="icon"><i class="fas fa-truck-loading"></i></span><br>已收货</a>
+                    </div>-->
+                    <!--全部包裹
+                    <div id="app">
+      <div class="taro-tabbar__container">
+          <div class="taro-tabbar__panel">-->
+              <div class="taro_router" style="height: 100%;">
+                  <div class="taro_page" style="min-height: 100%;">
+                      <div class="orders-container">
+                          <div class="opt-container">
+                              <!-- <div class="">
+                                  <div class="custom-nav-container" style="padding-top: 24px; padding-bottom: 5px;">
+                                      <div class="nav-wrap" style="height: 32px; line-height: 32px;">
+                                          <span class="taro-text title">包裹</span>
+                                      </div>
+                                  </div>
+                                  <div class="empty" style="height: 61px;"></div>
+                              </div>-->
+                              <a href="/my_packages" class="bosts">
+                                    <span class="taro-text">全部包裹管理</span>
+                                    <span class="taro-text at-icon at-icon-chevron-right" style="font-size: 0.6827rem;"></span>
+                              </a>
+                              <div class="opt-list small-size">
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                       <!--   <div class="at-badge__num">1</div>-->
+                                      </div>
+                                       <a href="/my_not_stored_packages">
+                                      <div class="taro-img taro-img__widthfix img-opt">
+
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172602_8869.png">
+
+                                      </div>
+                                           </a>
+                                     <div class="">未入库</div>
+
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/my_stored_packages">
+                                         <!-- <div class="at-badge__num">3</div>-->
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172628_8978.png">
+                                      </div>
+                                          </a>
+                                      <div class="">已入库</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/pending_review_orders">
+                                          <!--<div class="at-badge__num">3</div>-->
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172538_2972.png">
+                                      </div>
+                                          </a>
+                                      <div class="">待处理</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+
+                                          <a href="/pending_orders">
+                                        <!--  <div class="at-badge__num">3</div>-->
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172555_5223.png">
+                                      </div>
+                                      </a>
+                                      <div class="">待支付</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/awaiting_shipment_orders">
+
+
+                                        <!--  <div class="at-badge__num">3</div>-->
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172545_6657.png">
+                                          </div>
+                                          </a>
+                                      <div class="">待发货</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/shipped_orders">
+
+
+                                         <!-- <div class="at-badge__num">3</div>-->
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172616_4873.png">
+                                      </div>
+                                      </a>
+                                      <div class="">已发货</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/deliver_orders">
+
+
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172622_9563.png">
+                                      </div>
+                                      </a>
+
+                                      <div class="">已签收</div>
+                                  </div>
+
+                                  <div class="opt-item">
+                                     <div class="at-badge qty-info">
+
+                                         <!-- <div class="at-badge__num">3</div>-->
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172634_1611.png">
+                                      </div>
+
+                                      <div class="">异常件</div>
+                                  </div>
+                              </div>
+                          </div>
+
+
+
+                                    <!-- 水平布局区域2
+<div style="margin-top: 20px; background-color: #f2f2f2; padding: 10px;">
+    <div class="bosts">
+                              <span class="taro-text">我的订单</span>
+                              <span class="taro-text at-icon at-icon-chevron-right" style="font-size: 0.6827rem;"></span>
+                          </div>
+    <div class="sub-nav">
+        <a href="/my_orders">
+            <span class="icon"><i class="fas fa-search-dollar"></i></span><br>
+            <span>待查验</span>
+        </a>
+        <a href="/pending_orders">
+            <span class="icon"><i class="fas fa-hand-holding-usd"></i></span><br>
+            <span>待付款</span>
+        </a>
+        <a href="#">
+            <span class="icon"><i class="fas fa-truck"></i></span><br>
+            <span>待发货</span>
+        </a>
+        <a href="#">
+            <span class="icon"><i class="fas fa-shipping-fast"></i></span><br>
+            <span>已发货</span>
+        </a>
+        <a href="#">
+            <span class="icon"><i class="fas fa-check-circle"></i></span><br>
+            <span>已完成</span>
+        </a>
+         <a href="#">
+            <span class="icon"><i class="fas fa-check-circle"></i></span><br>
+            <span>已完成</span>
+        </a>
+    </div>
+</div>
+-->
+<!-- 水平布局区域3 -->
+<div class="horizontal-layout">
+    <div style="margin-top: 20px;">
+        <div class="bosts">
+                              <span class="taro-text">其他功能</span>
+                              <span class="taro-text at-icon at-icon-chevron-right" style="font-size: 0.6827rem;"></span>
+                          </div>
+        <div class="sub-nav">
+            <a href="/my_addresses"><span class="icon"><i class="fas fa-map-marker-alt"></i></span><br>收货地址</a>
+            <a href="/warehouse_addresses"><span class="icon"><i class="fas fa-warehouse"></i></span><br>仓库地址</a>
+            <a href="/upload"><span class="icon"><i class="fas fa-cog"></i></span><br>设置</a>
+            <a href="/logout"><span class="icon"><i class="fas fa-sign-out-alt"></i></span><br>退出登录</a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<footer style="background-color: #f0f0f0; padding: 20px;">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+        <div style="flex: 1; margin-right: 20px; margin-bottom: 20px;">
+            <h3 style="font-size: 10px; color: #333;">联系我们</h3>
+
+
+
+            <p style="font-size: 10px; color: #666;">电话: +86 18042815548</p>
+            <p style="font-size: 10px; color: #666;">微信客服：Air3788</p>
+            <p style="font-size: 10px; color: #666;">Email: 359268609@qq.com</p>
+        </div>
+        <div style="flex: 1; margin-right: 20px; margin-bottom: 20px;">
+            <h5 style="font-size: 10px; color: #333;">关注我们</h5>
+            <p style="font-size: 10px; color: #666;">微信公众号：蜂盒速递国际物流</p>
+            <p style="font-size: 10px; color: #666;">Facebook：蜂盒速递国际物流</p>
+
+            <p style="font-size: 10px; color: #666;">Instagram：蜂盒速递国际物流</p>
+        </div>
+       <!-- <div style="flex: 1; margin-bottom: 20px;">
+            <h4 style="font-size: 18px; color: #333;">常见问题</h4>
+            <p style="font-size: 16px; color: #666;">FAQ</p>
+            <p style="font-size: 16px; color: #666;">支持</p>
+            <p style="font-size: 16px; color: #666;">服务条款</p>
+        </div>-->
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <p style="font-size: 14px; color: #888;">© 2024 蜂盒国际技术开发团队.</p>
+    </div>
+</footer>
+
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+        function onSet() {
+            // Set button click handler
+            console.log('Settings clicked');
+            window.location.href = "/user/setting";
+        }
+
+        function onOrdersList() {
+            // Orders list button click handler
+            console.log('Orders list clicked');
+            window.location.href = "/user/orders";
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchUserInfo();
+            feather.replace();
+        });
+
+        function fetchUserInfo() {
+            // Replace with actual data fetching logic
+            const userId = 123; // Example user ID
+            fetch(`path/to/your/api/front/user/findById?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        const userInfo = data.data;
+                        document.querySelector('.user-img').src = userInfo.userImg;
+                        document.querySelector('.user-nickname').textContent = userInfo.nickname;
+                        document.querySelector('.user-username').textContent = `账号名：${userInfo.username}`;
+                    }
+                });
+        }
+    </script>
+
+</body>
+</html>

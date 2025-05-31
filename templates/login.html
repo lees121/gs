@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎用户登录临蜂盒速度国际物流集运</title> <!-- 设置页面标题 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="flex items-center justify-center min-h-screen bg-zinc-100 dark:bg-zinc-900">
+    <div class="bg-white dark:bg-zinc-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="text-center mb-6">
+            <img src="/uploads/20240623173821_4799.png" alt="logo" class="mx-auto mb-4" style="width:60px; height:60px; border-radius:60%; object-fit:cover;" crossorigin="anonymous">
+            <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-200">欢迎光临蜂盒速度国际物流集运! 👋</h2>
+            <p class="text-zinc-600 dark:text-zinc-400">请登录您的账户并开始集运</p>
+        </div>
+      <form method="POST" action="/login">
+    <!-- Identity Field (可以输入 member_id 或 username) -->
+    <div class="mb-4">
+        <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="identity">账户</label>
+        <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="text" id="identity" name="identity" placeholder="输入您的会员号或用户名" required>
+    </div>
+
+    <!-- Password Field -->
+    <div class="mb-4">
+        <label class="block text-zinc-700 dark:text-zinc-300 mb-2" for="password">密码</label>
+        <input class="w-full p-3 border border-zinc-300 rounded-lg dark:bg-zinc-700 dark:border-zinc-600 dark:text-zinc-200" type="password" id="password" name="password" placeholder="输入密码" required>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">登录</button>
+</form>
+        <div class="text-center mt-6">
+            <p class="text-zinc-600 dark:text-zinc-400">我们平台上的新手? <a href="/register" class="text-blue-600 dark:text-blue-400">创建账户</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.textContent = type === 'password' ? '显示' : '隐藏';
+    });
+</script>
+  </body>
+</html>
+

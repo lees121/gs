@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建新订单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>创建新订单</h1>
+    <!-- 表单用于创建新订单 -->
+    <form action="/create_order" method="post">
+        <!-- 表格用于选择已入库的包裹，允许多选 -->
+        <label for="select_all">全选</label>
+        <input type="checkbox" id="select_all" onclick="selectAll()">
+
+        <br>
+        <label for="tracking_numbers">选择已入库包裹:</label>
+        <table>
+            <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>包裹快递单号</th>
+                    <th>包裹名称</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in processed_packages %}
+                <tr>
+                    <!-- 每行提供复选框用于选择包裹 -->
+                    <td><input type="checkbox" class="checkbox" name="tracking_numbers" value="{{ package.tracking_number }}"></td>
+                    <!-- 每行显示包裹的快递单号和名称 -->
+                    <td>{{ package.tracking_number }}</td>
+                    <td>{{ package.item_name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
+        <!-- 其他订单信息输入卡片 -->
+        <div class="card">
+            <label for="shipping_address">收货地址:</label>
+            <input type="text" name="shipping_address" id="shipping_address" required>
+            <label for="city">城市:</label>
+            <input type="text" name="city" id="city" required>
+            <label for="delivery_method">运输方式:</label>
+            <select name="delivery_method" id="delivery_method">
+                <option value="空运">空运</option>
+                <option value="海运">海运</option>
+                <option value="陆运">陆运</option>
+            </select>
+            <label for="courier_company">快递公司:</label>
+            <input type="text" name="courier_company" id="courier_company" required>
+            <label for="is_sensitive">是否敏感货:</label>
+            <input type="checkbox" name="is_sensitive" id="is_sensitive">
+            <label for="remarks">备注:</label>
+            <textarea name="remarks" id="remarks" rows="4"></textarea>
+        </div>
+        <button type="submit">创建订单</button>
+    </form>
+
+    <!-- JavaScript代码实现全选功能 -->
+    <script>
+        function selectAll() {
+            var checkboxes = document.querySelectorAll('.checkbox');
+            var selectAllCheckbox = document.getElementById('select_all');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+    </script>
+</body>
+</html>

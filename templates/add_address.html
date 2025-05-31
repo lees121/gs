@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加地址</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 95%;
+            max-width: 600px; /* 限制最大宽度 */
+            margin: auto;
+            overflow: hidden;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="hidden"], input[type="submit"] {
+            width: calc(100% - 22px); /* 减去 padding 和 border 的宽度 */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #f44336;
+        }
+        .flash-message {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            color: #fff;
+            text-align: center;
+        }
+        .success {
+            background-color: #f44336;
+        }
+        .error {
+            background-color: #f44336;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+            }
+            form {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>添加地址</h1>
+        {% if user_info %}
+            <div>
+                <h2>欢迎, {{ user_info.username }}!</h2>
+                <p>邮箱: {{ user_info.email }}</p>
+                <p>会员ID: {{ user_info.member_id }}</p>
+            </div>
+        {% endif %}
+        <form method="post" action="{{ url_for('add_address') }}">
+            <input type="hidden" name="member_id" value="{{ user_info.member_id }}">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="address">地址:</label>
+            <input type="text" id="address" name="address" required>
+            <label for="phone">电话:</label>
+            <input type="text" id="phone" name="phone" required>
+            <label for="postcode">邮编:</label>
+            <input type="text" id="postcode" name="postcode" required>
+            <label for="city">城市:</label>
+            <input type="text" id="city" name="city" required>
+            <input type="submit" value="提交">
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.querySelector('form');
+
+            form.addEventListener('submit', function(event) {
+                var name = form['name'].value;
+                var address = form['address'].value;
+                var phone = form['phone'].value;
+                var postcode = form['postcode'].value;
+                var city = form['city'].value;
+
+                if (!name || !address || !phone || !postcode || !city) {
+                    alert('请填写所有字段。');
+                    event.preventDefault(); // 阻止表单提交
+                }
+            });
+        });
+    </script>
+</body>
+</html>

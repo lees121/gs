@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>填写订单信息</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select,
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: block;
+
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .card {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
+            overflow-x: auto;
+        }
+
+        .card-item {
+            flex: 0 0 25%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .card-item:last-child {
+            border-right: none;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .card-item {
+                flex: 1 1 100%;
+                padding: 8px;
+                text-align: left;
+            }
+        }
+        /* ... 其他样式 ... */
+
+.package-list {
+    margin-bottom: 20px;
+}
+
+.package-card {
+    /* 包裹卡片样式，与select_packages页面保持一致 */
+}
+
+.package-header {
+    display: flex;
+
+    align-items: center;
+    cursor: pointer; /* 鼠标悬停时显示手形图标 */
+}
+
+.package-body {
+    display: none; /* 默认不显示下拉内容 */
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* ... 其他样式 ... */
+    </style>
+    <style>
+        /* 此处添加CSS样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+           /*  padding: 20px;*/
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .package-card {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .package-header, .package-body {
+            padding: 10px;
+        }
+        .package-header {
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .tracking-number-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .tracking-number-link:hover {
+            text-decoration: underline;
+        }
+        .package-body {
+            display: none;
+            background-color: #f4f4f4;
+        }
+        .package-body p {
+            margin: 5px 0;
+        }
+        button[type="submit"], .dropdown-btn {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .dropdown-btn {
+            background-color: #007bff;
+        }
+        /* 其他样式... */
+    </style>
+    <style>
+  .three-color-dashed-line {
+    position: relative;
+    padding-bottom: 20px; /* 根据需要调整 */
+    margin: 10px 0; /* 上下边距 */
+    overflow: hidden; /* 隐藏超出部分 */
+  }
+
+  .three-color-dashed-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px; /* 根据需要调整高度 */
+     background: repeating-linear-gradient(
+      135deg, /* 斜向角度 */
+
+
+      transparent, /* 透明开始 */
+      transparent 5px, /* 透明5px */ #f5d5a1 5px, /* 红色开始 */ #f5d5a1 10px, /* 红色10px */
+      transparent 10px, /* 透明开始 */
+      transparent 15px, /* 透明15px */ #da2d4a 15px, /* 绿色开始 */ #da2d4a 20px, /* 绿色20px */
+      transparent 20px, /* 透明开始 */
+      transparent 25px, /* 透明25px */ #186ec4 25px, /* 蓝色开始 */
+      #186ec4 30px /* 蓝色30px */
+    );
+  }
+    </style>
+    <style>
+        .address-container {
+  display: flex;           /* 使用 Flexbox 布局 */
+  align-items: center;     /* 垂直居中对齐 */
+  justify-content: flex-start; /* 水平从开始对齐 */
+}
+
+.address-container p {
+  margin-right: 10px;      /* 在 p 和 a 之间添加间距 */
+}
+
+/* 可选：如果你想要链接在悬停时有下划线 */
+.address-container a {
+  text-decoration: none;
+  color: #bdbdbd;         /* 链接的颜色 */
+}
+
+.address-container a:hover {
+  text-decoration: underline; /* 鼠标悬停时添加下划线 */
+}
+
+
+
+
+
+        .address-containers {
+  display: flex;           /* 使用 Flexbox 布局 */
+  align-items: center;     /* 垂直居中对齐 */
+  justify-content: flex-start; /* 水平从开始对齐 */
+}
+
+.address-containers p {
+  margin-right: 10px;      /* 在 p 和 a 之间添加间距 */
+}
+
+/* 可选：如果你想要链接在悬停时有下划线 */
+.address-containers a {
+  text-decoration: none;
+  color: #696969;         /* 链接的颜色 */
+}
+
+.address-containers a:hover {
+  text-decoration: underline; /* 鼠标悬停时添加下划线 */
+}
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <h5></h5>
+<div class="three-color-dashed-line"></div>
+    <form action="/fill_order_info" method="post">
+        <!-- 显示选中的地址信息 -->
+<h2>
+  {% if selected_address %}
+      <div class="address-containers">
+      <h5>
+
+
+            <span class="icon"><i class="fas fa-map-marker-alt"></i></span>
+
+      {{ selected_address.name }} {{ selected_address.phone }} {{ selected_address.address }} {{ selected_address.city }}
+          </h5>
+      </div>
+  {% else %}
+
+
+
+          <div class="address-container">
+    <p>收货地址：</p>
+    <a href="/select_address">添加地址信息</a>
+          </div>
+
+
+  {% endif %}
+</h2>
+
+        <a href="/select_address">修改地址信息</a>
+<!--
+        <h1>{{ selected_address.name }} {{ selected_address.phone }} {{ selected_address.address }} {{ selected_address.city }}
+
+        </h1>-->
+<div class="three-color-dashed-line"></div>
+
+
+        <!-- 使用隐藏输入框提交选中的地址信息 -->
+        <input type="hidden" name="address" value="{{ selected_address.id }}">
+
+        <label for="delivery_method">运输方式:</label>
+        <select name="delivery_method" id="delivery_method">
+            <option value="空运">空运</option>
+            <option value="海运">海运</option>
+            <option value="陆运">陆运</option>
+        </select><br>
+
+        <label for="courier_company">快递公司:</label>
+        <input type="text" name="courier_company" id="courier_company" required><br>
+
+        <label for="cargo_type">货物类型:</label>
+        <select name="cargo_type" id="cargo_type">
+            <option value="普通货">普通货</option>
+            <option value="敏感货">敏感货</option>
+        </select><br>
+
+        <label for="remarks">备注:</label>
+        <textarea name="remarks" id="remarks" rows="4"></textarea><br>
+
+        <h2>已选中的包裹</h2>
+<div class="package-list">
+    {% for package in selected_packages %}
+    <div class="package-card">
+        <div class="package-header">
+            <span class="sequence-number">{{ loop.index }},</span> <!-- 序号 -->
+
+
+
+            <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank" class="tracking-number-link">
+                {{ package.tracking_number }}
+            </a>
+
+            <span>{{ package.cargo_type }}</span>
+            <span>{{ package.status }}</span>
+            <button class="dropdown-btn" type="button">详情</button>
+        </div>
+        <div class="package-body">
+            <!-- 包裹详细信息 -->
+            <p>包裹 ID：{{ package.id }}</p>
+            <p>快递单号: <a href="https://www.baidu.com/s?wd={{ package.tracking_number }}" target="_blank">{{ package.tracking_number }}</a></p>
+            <p>快递公司: {{ package.courier_company }}</p>
+            <p>商品名称: {{ package.item_name }}</p>
+            <p>重量: {{ package.weight }}</p>
+            <p>尺寸: {{ package.size }}</p>
+            <p>数量: {{ package.quantity }}</p>
+            <p>备注: {{ package.note }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+            <button type="submit">创建订单</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript 用于控制下拉详情的显示和隐藏
+        document.querySelectorAll('.dropdown-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.package-card');
+                const body = card.querySelector('.package-body');
+                body.style.display = body.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+    </script>
+</body>
+</html>
+

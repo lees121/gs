@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待支付订单</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .card {
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            width: 100%;
+            border-radius: 8px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card-header {
+            padding: 15px;
+            background-color: #f9f9f9;
+            color: #333;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-header:hover {
+            background-color: #f1f1f1;
+        }
+
+        .card-header a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .card-header a:hover {
+            color: #0056b3;
+        }
+
+        .card-header span {
+            font-size: 15px;
+        }
+
+        .container {
+            padding: 20px;
+            display: none;
+            background-color: #fff;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        p a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+
+        p a:hover {
+            color: #0056b3;
+        }
+
+        .status {
+            font-size: 15px;
+            color: green;
+            font-weight: bold;
+        }
+
+        .sensitive {
+            color: red;
+            text-shadow: 0 0 5px yellow;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+            .card-header {
+                font-size: 14px;
+            }
+        }
+        /* 表单和按钮样式 */
+        .pay-form {
+            margin-top: 10px;
+        }
+
+        .pay-form input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pay-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+
+<h1>待支付订单</h1>
+{% for order in orders %}
+<div class="card">
+    <div class="card-header" onclick="toggleContainer(this)">
+        <div style="display: flex; align-items: center;">
+            <img src="/uploads/20240526172555_5223.png" alt="logo" style="width: 40px; height: 40px; margin-right: 10px;">
+            <div>
+                <p1>订单号: {{ order.id }}</p1>
+                <a>{{ order.order_status }}{{ order.delivery_method }}<p>{{ order.international_tracking_number }}</p></a>
+
+            </div>
+        </div>
+
+        <div>
+             <form action="/pay_order/{{ order.id }}" method="post" class="pay-form">
+            <input type="submit" value="支付">
+        </form>
+
+
+
+           <span class="status" id="sensitive-text-{{ order.id }}">{{ order.is_sensitive }}</span>
+
+           <span>&#9660;</span>
+
+        </div>
+    </div>
+    <div class="container">
+        <p><strong>订单ID: </strong> {{ order.id }}<a href="/view_order_packages/{{ order.id }}"> 点击查看包裹</a></p>
+        <p><strong>查看包裹:</strong> <a href="/view_order_packages/{{ order.id }}">点击查看</a></p>
+        <p><strong>国际快递单号:</strong> {{ order.international_tracking_number }}</p>
+        <p><strong>收货地址:</strong> {{ order.shipping_address }}</p>
+        <p><strong>城市:</strong> {{ order.city }}</p>
+        <p><strong>运输方式:</strong> {{ order.delivery_method }}</p>
+        <p><strong>快递公司:</strong> {{ order.courier_company }}</p>
+        <p><strong>是否敏感货:</strong> <span class="status">{{ order.is_sensitive }}</span></p>
+        <p><strong>备注:</strong> {{ order.remarks }}</p>
+        <p><strong>体积CMB:</strong> {{ order.volume }}</p>
+        <p><strong>重量kg:</strong> {{ order.weight }}</p>
+        <p><strong>支付金额RMB:</strong> {{ order.payment_amount }}</p>
+        <p><strong>状态:</strong> {{ order.order_status }}</p>
+        <p><strong>创建时间:</strong> {{ order.created_at }}</p>
+         <form action="/pay_order/{{ order.id }}" method="post" class="pay-form">
+            <input type="submit" value="支付">
+        </form>
+
+
+
+
+
+    </div>
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var orderStatus = "{{ order.is_sensitive }}";
+        var statusElement = document.getElementById("sensitive-text-{{ order.id }}");
+        if (orderStatus === "敏感货") {
+            statusElement.classList.add("sensitive");
+        }
+    });
+</script>
+{% endfor %}
+
+
+
+<script>
+    function toggleContainer(element) {
+        const container = element.nextElementSibling;
+        const arrow = element.querySelector('span:last-child');
+        if (container.style.display === "none" || container.style.display === "") {
+            container.style.display = "block";
+            arrow.innerHTML = "&#9650;";
+        } else {
+            container.style.display = "none";
+            arrow.innerHTML = "&#9660;";
+        }
+    }
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+    <link rel="stylesheet" href="https://unpkg.com/feather-icons/dist/feather.css">
+    <style>
+        .header {
+            background-image: linear-gradient(135deg, #fdf5e7 10%, #f5d5a1 100%) !important;
+            height: 110px;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+            position: relative;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .user-img {
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            margin-right: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
+        .user-desc {
+            flex-grow: 1;
+        }
+        .user-nickname {
+            display: block;
+            font-weight: bolder;
+            font-size: 18px;
+            margin-top: 10px;
+            color: #170f07;
+        }
+        .user-username {
+            display: block;
+            margin-top: 5px;
+            color: #70635a;
+        }
+        .user-set {
+            font-size: 24px;
+            color: #70635a;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transform: translateY(-3px); /* 向上移动30px */
+        }
+        .order {
+            border-radius: 15px;
+            margin: 6px;
+            background-color: #ffffff;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影 */
+        }
+        .order span {
+            font-size: 16px;
+            font-weight: bolder;
+            color: #170f07;
+        }
+        .order-button {
+            float: right;
+            background-color: #ff5402;
+            border-radius: 999px;
+            font-size: small;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            border: none;
+            margin-top: 10px;
+        }
+        .order-grid-item {
+            text-align: center;
+            padding: 10px;
+        }
+        .order-grid-item .feather {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 24px;
+            color: #70635a;
+        }
+    </style>
+    <style type="text/css">
+img[src=""] {
+  opacity: 0;
+}
+
+.taro-img {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  font-size: 0;
+  width: 320px;
+  height: 240px;
+}
+
+.taro-img.taro-img__widthfix {
+  height: 100%;
+}
+
+.taro-img__mode-scaletofill {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-img__mode-aspectfit {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-img__mode-aspectfill {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.taro-img__mode-widthfix {
+  width: 100%;
+}
+
+.taro-img__mode-top {
+  width: 100%;
+}
+
+.taro-img__mode-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.taro-img__mode-left {
+  height: 100%;
+}
+
+.taro-img__mode-right {
+  position: absolute;
+  height: 100%;
+  right: 0;
+}
+
+.taro-img__mode-topright {
+  position: absolute;
+  right: 0;
+}
+
+.taro-img__mode-bottomleft {
+  position: absolute;
+  bottom: 0;
+}
+
+.taro-img__mode-bottomright {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+</style>
+<style type="text/css">
+html, body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+.taro-tabbar__border-white::before {
+  border-top-color: #fff !important;
+}
+
+.taro-tabbar__container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.taro-tabbar__panel {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.taro-tabbar__tabbar {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  transition: bottom .2s, top .2s;
+}
+
+.taro-tabbar__tabbar-top {
+  top: 0;
+}
+
+.taro-tabbar__tabbar-bottom {
+  bottom: 0;
+}
+
+.taro-tabbar__tabbar-hide {
+  display: none;
+}
+
+.taro-tabbar__tabbar-slideout {
+  top: -52px;
+  flex: 0 0;
+}
+
+.taro-tabbar__panel + .taro-tabbar__tabbar-slideout {
+  top: auto;
+  bottom: -52px;
+}
+</style>
+<style type="text/css">
+    input {
+  display: block;
+  height: 24px;
+  text-align: inherit;
+  text-overflow: clip;
+  overflow: hidden;
+  white-space: nowrap;
+}
+</style>
+<style type="text/css">
+    button {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  color: #000000;
+  background-color: #F8F8F8;
+}
+
+button[plain] {
+  color: #353535;
+  border: 1px solid #353535;
+  background-color: transparent;
+}
+
+button[plain][disabled] {
+  color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #F7F7F7;
+}
+
+button[type=primary] {
+  color: #FFFFFF;
+  background-color: #1AAD19;
+}
+
+button[type=primary][plain] {
+  color: #1aad19;
+  border: 1px solid #1aad19;
+  background-color: transparent;
+}
+
+button[type=primary][plain][disabled] {
+  color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #F7F7F7;
+}
+</style>
+<style type="text/css">
+    body, html{
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+</style>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no,address=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <style>
+    #appLoading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: #fff;
+    }
+    #appLoading .loading {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 160px;
+    }
+  </style>
+    <script>
+    !function(x){function w(){var v,u,t,tes,s=x.document,r=s.documentElement,a=r.getBoundingClientRect().width;if(!v&&!u){var n=!!x.navigator.appVersion.match(/AppleWebKit.*Mobile.*/);v=x.devicePixelRatio;tes=x.devicePixelRatio;v=n?v:1,u=1/v}if(a>=640){r.style.fontSize="40px"}else{if(a<=320){r.style.fontSize="20px"}else{r.style.fontSize=a/320*20+"px"}}}x.addEventListener("resize",function(){w()});w()}(window);
+  </script>
+   <style>
+       @font-face{font-weight:normal;font-style:normal;font-family:"taro";src:url("data:application/x-font-ttf;charset=utf-8;base64, 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") format("truetype")}@-webkit-keyframes taroLoading{0%{-webkit-transform:rotate3d(0,0,1,0deg)}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg)}}@keyframes taroLoading{0%{-webkit-transform:rotate3d(0,0,1,0deg)}100%{-webkit-transform:rotate3d(0,0,1,360deg);transform:rotate3d(0,0,1,360deg)}}.taro-modal__content{word-wrap:break-word;word-break:break-all}.taro-modal__foot:after{content:"";position:absolute;left:0;top:0;right:0;height:1px;border-top:1px solid #d5d5d6;color:#d5d5d6;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleY(.5);transform:scaleY(.5)}.taro-model__btn:active{background-color:#eee}.taro-model__btn:active{background-color:#eee}.taro-model__btn:not(:first-child):after{content:"";position:absolute;left:0;top:0;width:1px;bottom:0;border-left:1px solid #d5d5d6;color:#d5d5d6;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleX(.5);transform:scaleX(.5)}.taro-actionsheet__cell:not(:first-child):after{content:"";position:absolute;left:0;top:0;right:0;height:1px;border-top:1px solid #e5e5e5;color:#e5e5e5;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleY(.5);transform:scaleY(.5)}
+   </style>
+</head>
+<link rel="stylesheet" href="/static/css/orders_index.98eb4466dd768afcfbef.css">
+<link rel="stylesheet" href="/static/css/app.400daf3c187ab3d0a80c.css">
+
+
+<body>
+    <div class="container">
+        <!-- 顶部用户信息 start -->
+        <div class="header">
+            <div class="user-info">
+                <img class="user-img" src="/uploads/20240316002243_9288.jpg" alt="User Image">
+                <div class="user-desc">
+                    <span class="user-nickname">会员号：4908</span>
+                    <span class="user-username">账号名：胖子</span>
+                </div>
+                <i data-feather="settings" class="user-set" onclick="onSet()"></i>
+            </div>
+        </div>
+        <!-- 顶部用户信息 end -->
+
+        <!-- 我的订单 start
+        <div class="order">
+            <span>我的订单</span>
+            <button class="order-button" onclick="onOrdersList()">全部</button>
+            <div class="order-grid">
+                <div class="order-grid-item">
+                    <i data-feather="credit-card"></i>
+                    <span>待付款</span>
+                </div>
+                <div class="order-grid-item">
+                    <i data-feather="clock"></i>
+                    <span>待发货</span>
+                </div>
+                <div class="order-grid-item">
+                    <i data-feather="truck"></i>
+                    <span>待收货</span>
+                </div>
+                <div class="order-grid-item">
+                    <i data-feather="star"></i>
+                    <span>待评价</span>
+                </div>
+                <div class="order-grid-item">
+                    <i data-feather="headphones"></i>
+                    <span>售后</span>
+                </div>
+            </div>
+        </div>
+    </div>-->
+
+        <!-- 我的订单 end -->
+
+
+    <!--其他-->
+  <div class="taro_router" style="height: 100%;">
+                  <div class="taro_page" style="min-height: 100%;">
+                      <div class="orders-container">
+                          <div class="opt-container">
+                              <!-- <div class="">
+                                  <div class="custom-nav-container" style="padding-top: 24px; padding-bottom: 5px;">
+                                      <div class="nav-wrap" style="height: 32px; line-height: 32px;">
+                                          <span class="taro-text title">包裹</span>
+                                      </div>
+                                  </div>
+                                  <div class="empty" style="height: 61px;"></div>
+                              </div>-->
+                              <a href="/my_packages" class="bosts">
+                                    <span class="taro-text">全部包裹管理</span>
+                                    <span class="taro-text at-icon at-icon-chevron-right" style="font-size: 0.6827rem;"></span>
+                              </a>
+                              <div class="opt-list small-size">
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <div class="at-badge__num">1</div>
+                                      </div>
+                                       <a href="/my_not_stored_packages">
+                                      <div class="taro-img taro-img__widthfix img-opt">
+
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172602_8869.png">
+
+                                      </div>
+                                           </a>
+                                     <div class="">未入库</div>
+
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/my_stored_packages">
+                                          <div class="at-badge__num">3</div>
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172628_8978.png">
+                                      </div>
+                                          </a>
+                                      <div class="">已入库</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/pending_review_orders">
+                                          <div class="at-badge__num">3</div>
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172538_2972.png">
+                                      </div>
+                                          </a>
+                                      <div class="">待处理</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+
+                                          <a href="/pending_orders">
+                                          <div class="at-badge__num">3</div>
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172555_5223.png">
+                                      </div>
+                                      </a>
+                                      <div class="">待支付</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/awaiting_shipment_orders">
+
+
+                                          <div class="at-badge__num">3</div>
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172545_6657.png">
+                                          </div>
+                                          </a>
+                                      <div class="">待发货</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/shipped_orders">
+
+
+                                          <div class="at-badge__num">3</div>
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172616_4873.png">
+                                      </div>
+                                      </a>
+                                      <div class="">已发货</div>
+                                  </div>
+                                  <div class="opt-item">
+                                      <div class="at-badge qty-info">
+                                          <a href="/deliver_orders">
+
+
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172622_9563.png">
+                                      </div>
+                                      </a>
+
+                                      <div class="">已签收</div>
+                                  </div>
+
+                                  <div class="opt-item">
+                                     <div class="at-badge qty-info">
+
+                                          <div class="at-badge__num">3</div>
+                                      </div>
+                                      <div class="taro-img taro-img__widthfix img-opt">
+                                          <img class="taro-img__mode-widthfix" src="/uploads/20240526172634_1611.png">
+                                      </div>
+
+                                      <div class="">异常件</div>
+                                  </div>
+                              </div>
+                          </div>
+                          <!--
+                          <div class="pay">
+                              <span class="taro-text">您有0笔待补款未支付，点击前往支付</span>
+                              <span class="taro-text at-icon at-icon-chevron-right" style="font-size: 0.6827rem;"></span>
+                          </div>
+                          <div class="">
+                              <div class="order-tab small-size">
+                                  <span class="taro-text tab-title (actived)">待处理</span>
+                                  <span class="taro-text tab-title ()">待支付</span>
+                                  <span class="taro-text tab-title ()">待评价</span>
+                              </div>
+                              <div class="order-list"></div>
+                              <div class="at-modal">
+                                  <div class="at-modal__overlay">
+
+                                  </div>
+                                  <div class="at-modal__container">
+                                      <div scrolly="true" class="taro-scroll taro-scroll-view__scroll-y at-modal__content content">
+                                          <div class="">
+
+                                          </div>
+                                          <div class="remark">
+
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="loading-container">
+                                  <div class="loading-box">
+
+                                  </div>
+                                  <div class="empty-box" style="margin-top: 0px;">
+                                      <div class="taro-img empty-img">
+                                          <img class="taro-img__mode-scaletofill" src="data:image/png;base64,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"></div>
+                                      <div class="">暂无内容</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+-->
+
+
+
+      </div>
+  </div>
+
+
+
+
+
+
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        function onSet() {
+            // Set button click handler
+            console.log('Settings clicked');
+            window.location.href = "/user/setting";
+        }
+
+        function onOrdersList() {
+            // Orders list button click handler
+            console.log('Orders list clicked');
+            window.location.href = "/user/orders";
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchUserInfo();
+            feather.replace();
+        });
+
+        function fetchUserInfo() {
+            // Replace with actual data fetching logic
+            const userId = 123; // Example user ID
+            fetch(`path/to/your/api/front/user/findById?userId=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        const userInfo = data.data;
+                        document.querySelector('.user-img').src = userInfo.userImg;
+                        document.querySelector('.user-nickname').textContent = userInfo.nickname;
+                        document.querySelector('.user-username').textContent = `账号名：${userInfo.username}`;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>

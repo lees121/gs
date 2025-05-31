@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待支付订单支付</title>
+</head>
+<body>
+    <h1>待支付订单支付</h1>
+    <form action="/pending_orders/pay" method="POST">
+        <label for="payment_amount">支付金额：</label>
+        <input type="number" id="payment_amount" name="payment_amount" required>
+        <button type="submit">支付</button>
+    </form>
+</body>
+</html>

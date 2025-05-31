@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钱包管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .button-link {
+            display: inline-block;
+            margin-right: 10px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+        .icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            margin-right: 10px;
+        }
+        .icon a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>钱包管理</h1>
+    <div class="container">
+        <div class="section">
+            <h2>钱包余额</h2>
+            <p>当前余额: {{ balance }}元</p>
+        </div>
+        <div class="section">
+            <h2>充值</h2>
+            <form action="/topup" method="post">
+                <label for="topup_amount">充值金额:</label>
+                <input type="text" id="topup_amount" name="topup_amount" required>
+                <button type="submit" class="button-link">确认充值</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>其他功能</h2>
+            <a>账户明细</a><div class="icon">
+                <a href="/account_details">&#128197;</a> <!-- 账户明细 -->
+            </div>
+            <a>汇款账户</a><div class="icon">
+                <a href="/remittance_account">&#128178;</a> <!-- 汇款账户 -->
+            </div>
+           <a>上传凭证</a> <div class="icon">
+                <a href="/upload_voucher">&#128206;</a> <!-- 上传凭证 -->
+            </div>
+            <a>凭证记录</a><div class="icon">
+                <a href="/voucher_records">&#128220;</a> <!-- 凭证记录 -->
+            </div>
+                    <div class="section">
+            <h2>交易记录</h2>
+            <a href="/order_transactions" class="button-link">查看订单交易记录</a>
+            <a href="/topup_transactions" class="button-link">查看充值交易记录</a>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
